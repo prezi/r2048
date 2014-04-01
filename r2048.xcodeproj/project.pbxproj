@@ -1,0 +1,635 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7992F07618E481E90020B45A /* RTTMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 7992F07518E481E90020B45A /* RTTMatrix.m */; };
+		7992F07718E481E90020B45A /* RTTMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 7992F07518E481E90020B45A /* RTTMatrix.m */; };
+		79B1DC2318E469BB003BBBE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B1DC2218E469BB003BBBE7 /* Foundation.framework */; };
+		79B1DC2518E469BB003BBBE7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B1DC2418E469BB003BBBE7 /* CoreGraphics.framework */; };
+		79B1DC2718E469BB003BBBE7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B1DC2618E469BB003BBBE7 /* UIKit.framework */; };
+		79B1DC2F18E469BB003BBBE7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B1DC2E18E469BB003BBBE7 /* main.m */; };
+		79B1DC3318E469BB003BBBE7 /* RTTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B1DC3218E469BB003BBBE7 /* RTTAppDelegate.m */; };
+		79B1DC3C18E469BB003BBBE7 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B1DC3B18E469BB003BBBE7 /* XCTest.framework */; };
+		79B1DC3D18E469BB003BBBE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B1DC2218E469BB003BBBE7 /* Foundation.framework */; };
+		79B1DC3E18E469BB003BBBE7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B1DC2618E469BB003BBBE7 /* UIKit.framework */; };
+		A94F6E0541F4413492DDC519 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 826EA994BA2347EDAC81FCE6 /* libPods.a */; };
+		ADEAF0241D9EF5E301AB6963 /* RTTPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF11398EAA0106F731E3C /* RTTPoint.m */; };
+		ADEAF07DA16ACC1EC3275E65 /* RTTScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF0CA0A148E349E29D1AA /* RTTScoreView.m */; };
+		ADEAF0D567DD6976B49BC55A /* NSArray+RTTVectors.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAFC01BD9E295C25FFC495 /* NSArray+RTTVectors.m */; };
+		ADEAF101549C309B24C4503F /* UIView+RTTClear.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAFA9BFFC6E954202A3DEF /* UIView+RTTClear.m */; };
+		ADEAF104E086F50642BC944A /* RTTVector.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF448EEFA87E14F809E52 /* RTTVector.m */; };
+		ADEAF11E61C512FCC60DBB48 /* NSArray+RTTTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF0D1389957A097BDDEAA /* NSArray+RTTTiles.m */; };
+		ADEAF20CC70BA23E95AF40B0 /* NSArray+RTTTiles.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF0D1389957A097BDDEAA /* NSArray+RTTTiles.m */; };
+		ADEAF227ACFDDB9C65219360 /* RTTTile.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF3101B09A0D11D7CB914 /* RTTTile.m */; };
+		ADEAF47408F3A1276CBB3988 /* RTTTile.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF3101B09A0D11D7CB914 /* RTTTile.m */; };
+		ADEAF6F5B6712A1CC0BA0ED6 /* RTTMatrixViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF9D15270E03349469500 /* RTTMatrixViewController.m */; };
+		ADEAF7E0319197FDF371AC91 /* RTTTileView.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAFC9FA65D256537CB3F8C /* RTTTileView.m */; };
+		ADEAF8CF613EA6DE49687C8B /* RTTPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF11398EAA0106F731E3C /* RTTPoint.m */; };
+		ADEAF9AACA387ED2D8370DC2 /* UIColor+RTTFromHex.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF60C985F34239C0516C6 /* UIColor+RTTFromHex.m */; };
+		ADEAF9C06FFE9FE2B89A3F10 /* RTTMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF5D908FD0E50CBB374C9 /* RTTMainViewController.m */; };
+		ADEAFA9A67C437391B036DFA /* NSArray+RTTVectors.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAFC01BD9E295C25FFC495 /* NSArray+RTTVectors.m */; };
+		ADEAFAD067E67E308FFFF51A /* UT_Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF169D78364069F88A7D7 /* UT_Matrix.m */; };
+		ADEAFC2B606CE562276AB1AB /* RTTVector.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF448EEFA87E14F809E52 /* RTTVector.m */; };
+		ADEAFDE1DFD65B5F3397A476 /* RTTScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF0CA0A148E349E29D1AA /* RTTScoreView.m */; };
+		ADEAFE523E101F6D1F781EE6 /* UT_Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = ADEAF47D02A6161614DF1C00 /* UT_Vector.m */; };
+		FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		79B1DC3F18E469BB003BBBE7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79B1DC1718E469BB003BBBE7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79B1DC1E18E469BB003BBBE7;
+			remoteInfo = r2048;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4D5278BFCCF64DB7999D05F8 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		7992F07418E481E90020B45A /* RTTMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTMatrix.h; sourceTree = "<group>"; };
+		7992F07518E481E90020B45A /* RTTMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTMatrix.m; sourceTree = "<group>"; };
+		79B1DC1F18E469BB003BBBE7 /* r2048.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = r2048.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		79B1DC2218E469BB003BBBE7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		79B1DC2418E469BB003BBBE7 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		79B1DC2618E469BB003BBBE7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		79B1DC2A18E469BB003BBBE7 /* r2048-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "r2048-Info.plist"; sourceTree = "<group>"; };
+		79B1DC2E18E469BB003BBBE7 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		79B1DC3018E469BB003BBBE7 /* r2048-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "r2048-Prefix.pch"; sourceTree = "<group>"; };
+		79B1DC3118E469BB003BBBE7 /* RTTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RTTAppDelegate.h; sourceTree = "<group>"; };
+		79B1DC3218E469BB003BBBE7 /* RTTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RTTAppDelegate.m; sourceTree = "<group>"; };
+		79B1DC3A18E469BB003BBBE7 /* r2048Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = r2048Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		79B1DC3B18E469BB003BBBE7 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		79B1DC4318E469BB003BBBE7 /* r2048Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "r2048Tests-Info.plist"; sourceTree = "<group>"; };
+		826EA994BA2347EDAC81FCE6 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ADC447964A7C42E5B66FE834 /* Pods-r2048Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-r2048Tests.xcconfig"; path = "Pods/Pods-r2048Tests.xcconfig"; sourceTree = "<group>"; };
+		ADEAF0CA0A148E349E29D1AA /* RTTScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTScoreView.m; sourceTree = "<group>"; };
+		ADEAF0D1389957A097BDDEAA /* NSArray+RTTTiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+RTTTiles.m"; sourceTree = "<group>"; };
+		ADEAF11398EAA0106F731E3C /* RTTPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTPoint.m; sourceTree = "<group>"; };
+		ADEAF16998777FD095632EA2 /* RTTVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTVector.h; sourceTree = "<group>"; };
+		ADEAF169D78364069F88A7D7 /* UT_Matrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UT_Matrix.m; sourceTree = "<group>"; };
+		ADEAF1B52EF410A67E9A02F0 /* NSArray+RTTVectors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+RTTVectors.h"; sourceTree = "<group>"; };
+		ADEAF2394E6AB09B68A3531E /* RTTPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTPoint.h; sourceTree = "<group>"; };
+		ADEAF3101B09A0D11D7CB914 /* RTTTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTTile.m; sourceTree = "<group>"; };
+		ADEAF3CC44FD133CC822BE2E /* UIColor+RTTFromHex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RTTFromHex.h"; sourceTree = "<group>"; };
+		ADEAF448EEFA87E14F809E52 /* RTTVector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTVector.m; sourceTree = "<group>"; };
+		ADEAF47D02A6161614DF1C00 /* UT_Vector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UT_Vector.m; sourceTree = "<group>"; };
+		ADEAF5D908FD0E50CBB374C9 /* RTTMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTMainViewController.m; sourceTree = "<group>"; };
+		ADEAF60C985F34239C0516C6 /* UIColor+RTTFromHex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+RTTFromHex.m"; sourceTree = "<group>"; };
+		ADEAF659FBB17B3AEE7A8355 /* RTTScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTScoreView.h; sourceTree = "<group>"; };
+		ADEAF70E0D6C63C40A386162 /* UIView+RTTClear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RTTClear.h"; sourceTree = "<group>"; };
+		ADEAF720E0E8A70C7E7429B9 /* RTTTileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTTileView.h; sourceTree = "<group>"; };
+		ADEAF9D15270E03349469500 /* RTTMatrixViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTMatrixViewController.m; sourceTree = "<group>"; };
+		ADEAFA9BFFC6E954202A3DEF /* UIView+RTTClear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RTTClear.m"; sourceTree = "<group>"; };
+		ADEAFC01BD9E295C25FFC495 /* NSArray+RTTVectors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+RTTVectors.m"; sourceTree = "<group>"; };
+		ADEAFC0FD0E2E86E8AC118AA /* RTTTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTTile.h; sourceTree = "<group>"; };
+		ADEAFC9FA65D256537CB3F8C /* RTTTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTTileView.m; sourceTree = "<group>"; };
+		ADEAFE33368A2955FFC338A8 /* RTTMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTMainViewController.h; sourceTree = "<group>"; };
+		ADEAFEBDBC7D9EACD1BC98E9 /* NSArray+RTTTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+RTTTiles.h"; sourceTree = "<group>"; };
+		ADEAFF53CFA68F77574D4DC5 /* RTTMatrixViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTMatrixViewController.h; sourceTree = "<group>"; };
+		FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-r2048Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		79B1DC1C18E469BB003BBBE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79B1DC2518E469BB003BBBE7 /* CoreGraphics.framework in Frameworks */,
+				79B1DC2718E469BB003BBBE7 /* UIKit.framework in Frameworks */,
+				79B1DC2318E469BB003BBBE7 /* Foundation.framework in Frameworks */,
+				A94F6E0541F4413492DDC519 /* libPods.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B1DC3718E469BB003BBBE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79B1DC3C18E469BB003BBBE7 /* XCTest.framework in Frameworks */,
+				79B1DC3E18E469BB003BBBE7 /* UIKit.framework in Frameworks */,
+				79B1DC3D18E469BB003BBBE7 /* Foundation.framework in Frameworks */,
+				FB29F135505D40E38954771E /* libPods-r2048Tests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7992F07318E481E90020B45A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7992F07418E481E90020B45A /* RTTMatrix.h */,
+				7992F07518E481E90020B45A /* RTTMatrix.m */,
+				ADEAF11398EAA0106F731E3C /* RTTPoint.m */,
+				ADEAF2394E6AB09B68A3531E /* RTTPoint.h */,
+				ADEAF448EEFA87E14F809E52 /* RTTVector.m */,
+				ADEAF16998777FD095632EA2 /* RTTVector.h */,
+				ADEAF3101B09A0D11D7CB914 /* RTTTile.m */,
+				ADEAFC0FD0E2E86E8AC118AA /* RTTTile.h */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		79B1DC1618E469BB003BBBE7 = {
+			isa = PBXGroup;
+			children = (
+				79B1DC2818E469BB003BBBE7 /* r2048 */,
+				79B1DC4118E469BB003BBBE7 /* r2048Tests */,
+				79B1DC2118E469BB003BBBE7 /* Frameworks */,
+				79B1DC2018E469BB003BBBE7 /* Products */,
+				4D5278BFCCF64DB7999D05F8 /* Pods.xcconfig */,
+				ADC447964A7C42E5B66FE834 /* Pods-r2048Tests.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		79B1DC2018E469BB003BBBE7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79B1DC1F18E469BB003BBBE7 /* r2048.app */,
+				79B1DC3A18E469BB003BBBE7 /* r2048Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		79B1DC2118E469BB003BBBE7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79B1DC2218E469BB003BBBE7 /* Foundation.framework */,
+				79B1DC2418E469BB003BBBE7 /* CoreGraphics.framework */,
+				79B1DC2618E469BB003BBBE7 /* UIKit.framework */,
+				79B1DC3B18E469BB003BBBE7 /* XCTest.framework */,
+				826EA994BA2347EDAC81FCE6 /* libPods.a */,
+				FEED980426244769B8DB9F20 /* libPods-r2048Tests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		79B1DC2818E469BB003BBBE7 /* r2048 */ = {
+			isa = PBXGroup;
+			children = (
+				7992F07318E481E90020B45A /* Model */,
+				79B1DC3118E469BB003BBBE7 /* RTTAppDelegate.h */,
+				79B1DC3218E469BB003BBBE7 /* RTTAppDelegate.m */,
+				79B1DC2918E469BB003BBBE7 /* Supporting Files */,
+				ADEAFF91C031A036CB45EC7A /* Library */,
+				ADEAFE5708E6C286D6FE86C2 /* View */,
+			);
+			path = r2048;
+			sourceTree = "<group>";
+		};
+		79B1DC2918E469BB003BBBE7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				79B1DC2A18E469BB003BBBE7 /* r2048-Info.plist */,
+				79B1DC2E18E469BB003BBBE7 /* main.m */,
+				79B1DC3018E469BB003BBBE7 /* r2048-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		79B1DC4118E469BB003BBBE7 /* r2048Tests */ = {
+			isa = PBXGroup;
+			children = (
+				79B1DC4218E469BB003BBBE7 /* Supporting Files */,
+				ADEAFC0B1FB9BE6E8CC9ECC3 /* Model */,
+			);
+			path = r2048Tests;
+			sourceTree = "<group>";
+		};
+		79B1DC4218E469BB003BBBE7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				79B1DC4318E469BB003BBBE7 /* r2048Tests-Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ADEAFC0B1FB9BE6E8CC9ECC3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ADEAF169D78364069F88A7D7 /* UT_Matrix.m */,
+				ADEAF47D02A6161614DF1C00 /* UT_Vector.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ADEAFE5708E6C286D6FE86C2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ADEAF5D908FD0E50CBB374C9 /* RTTMainViewController.m */,
+				ADEAFE33368A2955FFC338A8 /* RTTMainViewController.h */,
+				ADEAF9D15270E03349469500 /* RTTMatrixViewController.m */,
+				ADEAFF53CFA68F77574D4DC5 /* RTTMatrixViewController.h */,
+				ADEAFC9FA65D256537CB3F8C /* RTTTileView.m */,
+				ADEAF720E0E8A70C7E7429B9 /* RTTTileView.h */,
+				ADEAF0CA0A148E349E29D1AA /* RTTScoreView.m */,
+				ADEAF659FBB17B3AEE7A8355 /* RTTScoreView.h */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ADEAFF91C031A036CB45EC7A /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				ADEAFC01BD9E295C25FFC495 /* NSArray+RTTVectors.m */,
+				ADEAF1B52EF410A67E9A02F0 /* NSArray+RTTVectors.h */,
+				ADEAF60C985F34239C0516C6 /* UIColor+RTTFromHex.m */,
+				ADEAF3CC44FD133CC822BE2E /* UIColor+RTTFromHex.h */,
+				ADEAF0D1389957A097BDDEAA /* NSArray+RTTTiles.m */,
+				ADEAFEBDBC7D9EACD1BC98E9 /* NSArray+RTTTiles.h */,
+				ADEAF70E0D6C63C40A386162 /* UIView+RTTClear.h */,
+				ADEAFA9BFFC6E954202A3DEF /* UIView+RTTClear.m */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		79B1DC1E18E469BB003BBBE7 /* r2048 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79B1DC4B18E469BB003BBBE7 /* Build configuration list for PBXNativeTarget "r2048" */;
+			buildPhases = (
+				804BBA1C7E4C4E9080892A5B /* Check Pods Manifest.lock */,
+				79B1DC1B18E469BB003BBBE7 /* Sources */,
+				79B1DC1C18E469BB003BBBE7 /* Frameworks */,
+				79B1DC1D18E469BB003BBBE7 /* Resources */,
+				A37E34F95D4947E0BB1009EB /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = r2048;
+			productName = r2048;
+			productReference = 79B1DC1F18E469BB003BBBE7 /* r2048.app */;
+			productType = "com.apple.product-type.application";
+		};
+		79B1DC3918E469BB003BBBE7 /* r2048Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79B1DC4E18E469BB003BBBE7 /* Build configuration list for PBXNativeTarget "r2048Tests" */;
+			buildPhases = (
+				5248EBE2679E49819F3B2F79 /* Check Pods Manifest.lock */,
+				79B1DC3618E469BB003BBBE7 /* Sources */,
+				79B1DC3718E469BB003BBBE7 /* Frameworks */,
+				79B1DC3818E469BB003BBBE7 /* Resources */,
+				4EE22037ABD940249FE359BF /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79B1DC4018E469BB003BBBE7 /* PBXTargetDependency */,
+			);
+			name = r2048Tests;
+			productName = r2048Tests;
+			productReference = 79B1DC3A18E469BB003BBBE7 /* r2048Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		79B1DC1718E469BB003BBBE7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = RTT;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Viktor Belenyesi";
+				TargetAttributes = {
+					79B1DC3918E469BB003BBBE7 = {
+						TestTargetID = 79B1DC1E18E469BB003BBBE7;
+					};
+				};
+			};
+			buildConfigurationList = 79B1DC1A18E469BB003BBBE7 /* Build configuration list for PBXProject "r2048" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 79B1DC1618E469BB003BBBE7;
+			productRefGroup = 79B1DC2018E469BB003BBBE7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				79B1DC1E18E469BB003BBBE7 /* r2048 */,
+				79B1DC3918E469BB003BBBE7 /* r2048Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		79B1DC1D18E469BB003BBBE7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B1DC3818E469BB003BBBE7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4EE22037ABD940249FE359BF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-r2048Tests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5248EBE2679E49819F3B2F79 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		804BBA1C7E4C4E9080892A5B /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A37E34F95D4947E0BB1009EB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		79B1DC1B18E469BB003BBBE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79B1DC2F18E469BB003BBBE7 /* main.m in Sources */,
+				79B1DC3318E469BB003BBBE7 /* RTTAppDelegate.m in Sources */,
+				7992F07618E481E90020B45A /* RTTMatrix.m in Sources */,
+				ADEAFA9A67C437391B036DFA /* NSArray+RTTVectors.m in Sources */,
+				ADEAF8CF613EA6DE49687C8B /* RTTPoint.m in Sources */,
+				ADEAF104E086F50642BC944A /* RTTVector.m in Sources */,
+				ADEAF227ACFDDB9C65219360 /* RTTTile.m in Sources */,
+				ADEAF9AACA387ED2D8370DC2 /* UIColor+RTTFromHex.m in Sources */,
+				ADEAF9C06FFE9FE2B89A3F10 /* RTTMainViewController.m in Sources */,
+				ADEAF6F5B6712A1CC0BA0ED6 /* RTTMatrixViewController.m in Sources */,
+				ADEAF7E0319197FDF371AC91 /* RTTTileView.m in Sources */,
+				ADEAF11E61C512FCC60DBB48 /* NSArray+RTTTiles.m in Sources */,
+				ADEAFDE1DFD65B5F3397A476 /* RTTScoreView.m in Sources */,
+				ADEAF101549C309B24C4503F /* UIView+RTTClear.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B1DC3618E469BB003BBBE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7992F07718E481E90020B45A /* RTTMatrix.m in Sources */,
+				ADEAF0D567DD6976B49BC55A /* NSArray+RTTVectors.m in Sources */,
+				ADEAF0241D9EF5E301AB6963 /* RTTPoint.m in Sources */,
+				ADEAFC2B606CE562276AB1AB /* RTTVector.m in Sources */,
+				ADEAF47408F3A1276CBB3988 /* RTTTile.m in Sources */,
+				ADEAFAD067E67E308FFFF51A /* UT_Matrix.m in Sources */,
+				ADEAFE523E101F6D1F781EE6 /* UT_Vector.m in Sources */,
+				ADEAF20CC70BA23E95AF40B0 /* NSArray+RTTTiles.m in Sources */,
+				ADEAF07DA16ACC1EC3275E65 /* RTTScoreView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		79B1DC4018E469BB003BBBE7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79B1DC1E18E469BB003BBBE7 /* r2048 */;
+			targetProxy = 79B1DC3F18E469BB003BBBE7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		79B1DC4918E469BB003BBBE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		79B1DC4A18E469BB003BBBE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		79B1DC4C18E469BB003BBBE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D5278BFCCF64DB7999D05F8 /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "r2048/r2048-Prefix.pch";
+				INFOPLIST_FILE = "r2048/r2048-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		79B1DC4D18E469BB003BBBE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4D5278BFCCF64DB7999D05F8 /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "r2048/r2048-Prefix.pch";
+				INFOPLIST_FILE = "r2048/r2048-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		79B1DC4F18E469BB003BBBE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADC447964A7C42E5B66FE834 /* Pods-r2048Tests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/r2048.app/r2048";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "r2048/r2048-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "r2048Tests/r2048Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		79B1DC5018E469BB003BBBE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ADC447964A7C42E5B66FE834 /* Pods-r2048Tests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/r2048.app/r2048";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "r2048/r2048-Prefix.pch";
+				INFOPLIST_FILE = "r2048Tests/r2048Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				USER_HEADER_SEARCH_PATHS = "\"${PROJECT_DIR}/Pods\"/**";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		79B1DC1A18E469BB003BBBE7 /* Build configuration list for PBXProject "r2048" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79B1DC4918E469BB003BBBE7 /* Debug */,
+				79B1DC4A18E469BB003BBBE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79B1DC4B18E469BB003BBBE7 /* Build configuration list for PBXNativeTarget "r2048" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79B1DC4C18E469BB003BBBE7 /* Debug */,
+				79B1DC4D18E469BB003BBBE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79B1DC4E18E469BB003BBBE7 /* Build configuration list for PBXNativeTarget "r2048Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79B1DC4F18E469BB003BBBE7 /* Debug */,
+				79B1DC5018E469BB003BBBE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 79B1DC1718E469BB003BBBE7 /* Project object */;
+}

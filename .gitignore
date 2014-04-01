@@ -1,0 +1,30 @@
+# os x
+.DS_Store
+
+# xcode
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata
+*/build/*
+profile
+*.moved-aside
+DerivedData
+*.hmap
+*.xccheckout
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+# appcode
+.idea
+
+# CocoaPods
+Pods
+Products
+
+# Calabash
+.irb-history
+**/screenshot_*.png
