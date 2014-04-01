@@ -2,6 +2,8 @@
 
 Demo project which shows how we (would like to) develop in Objective C at Prezi.
 
+![Alt text](screenshot.png "Screenshot")
+
 ## Day 1 - Model
 **Tags:** [TDD](http://en.wikipedia.org/wiki/Test-driven_development),
 [Kiwi](https://github.com/allending/Kiwi),
