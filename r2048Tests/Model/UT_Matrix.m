@@ -10,13 +10,13 @@
 SPEC_BEGIN(MatrixSpec)
 
 describe(@"Matrix", ^{
+    
     __block RTTMatrix* sut = nil;
-    __block const RTTPoint*p00 = point(0, 0);
+    __block const RTTPoint* p00 = point(0, 0);
     __block const RTTPoint* p10 = point(1, 0);
     __block const RTTPoint* p01 = point(0, 1);
     __block const RTTPoint* p20 = point(2, 0);
     __block const RTTPoint* p30 = point(3, 0);
-
 
     beforeEach(^{
         sut = emptyMatrix();
@@ -445,7 +445,7 @@ describe(@"Matrix", ^{
 
     });
 
-    context(@"is ended", ^{
+    context(@"is over", ^{
         __block RTTMatrix* fullMatrix = nil;
 
         beforeEach(^{
@@ -512,6 +512,7 @@ describe(@"Matrix", ^{
         });
 
     });
+    
 });
 
 SPEC_END
