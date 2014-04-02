@@ -127,11 +127,12 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     // merge 4 directional gesturerecognizers into one stream
     RACSignal* swipeSignal = [RACSignal merge:signalArray];
 
-    // map the directions to animation vectors
     RACSignal* vectorSignal = [[swipeSignal
         map:^id(NSNumber* direction) {
+            // map the directions to animation vectors
             return self.matrix.mapDirectionToReduceVectors(direction);
-        }] filter:^BOOL(NSArray* vectors) {
+        }]
+        filter:^BOOL(NSArray* vectors) {
             return [vectors count] > 0;
         }];
 
@@ -155,9 +156,12 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
         RTTMatrix* reducedMatrix = self.matrix.applyReduceVectors(vectors);
 
         // moves
-        NSArray* tileViewsToMove = [[[moves.rac_sequence map:^id(RTTVector* vector) {
-            return vector.from;
-        }] map:firstTileViewsForPoint] array];
+        NSArray* tileViewsToMove = [[[moves.rac_sequence
+            map:^id(RTTVector* vector) {
+                return vector.from;
+            }]
+            map:firstTileViewsForPoint]
+            array];
 
         // remove old tileviewss
         for (RTTTileView* tileView in tileViewsToMove) {
@@ -165,36 +169,51 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
         }
 
         // create replace tiles, copy frame and change point, because tileviews are immutables
-        tileViewsToMove = [[[moves.rac_sequence zipWith:tileViewsToMove.rac_sequence] map:^id(RACTuple* tuple) {
-            RTTVector* vector = tuple.first;
-            RTTTileView* tileView = tuple.second;
+        tileViewsToMove = [[[moves.rac_sequence
+            zipWith:tileViewsToMove.rac_sequence]
+            map:^id(RACTuple* tuple) {
+                RTTVector* vector = tuple.first;
+                RTTTileView* tileView = tuple.second;
 
-            RTTTileView* replaceTileView = mapTileToTileView(tile(vector.to, tileView.value));
-            replaceTileView.frame = tileView.frame;
-            return replaceTileView;
-        }] array];
+                RTTTileView* replaceTileView = mapTileToTileView(tile(vector.to, tileView.value));
+                replaceTileView.frame = tileView.frame;
+                return replaceTileView;
+            }]
+            array];
 
         for (RTTTileView* tileView in tileViewsToMove) {
             [gameView insertSubview:tileView atIndex:0];
         }
 
         // collect tiles to remove after merge
-        NSArray* tileViewsToDiscard = [[[merges.rac_sequence map:mapTileViewsForPoint] flatten] array];
+        NSArray* tileViewsToDiscard = [[[merges.rac_sequence
+            map:mapTileViewsForPoint]
+            flatten]
+            array];
 
         // get merged tiles
-        NSArray* tileViewsToMerge = [[[merges.rac_sequence map:^id(RTTPoint* point) {
-            return tile(point, reducedMatrix.valueAt(point));
-        }] map:mapTileToTileView] array];
+        NSArray* tileViewsToMerge = [[[merges.rac_sequence
+            map:^id(RTTPoint* point) {
+                return tile(point, reducedMatrix.valueAt(point));
+            }]
+            map:mapTileToTileView]
+            array];
 
         // get to creat tileviews
-        NSArray* tileViewsToCreate = [[creates.rac_sequence map:mapTileToTileView] array];
+        NSArray* tileViewsToCreate = [[creates.rac_sequence
+            map:mapTileToTileView]
+            array];
 
         // set score
-        self.score += [[[merges.rac_sequence map:^id(RTTPoint* point) {
-            return @(reducedMatrix.valueAt(point));
-        }] foldLeftWithStart:@0 reduce:^id(NSNumber* accumulator, NSNumber* next) {
-            return @(accumulator.intValue + next.intValue);
-        }] intValue];
+        self.score += [[[merges.rac_sequence
+            map:^id(RTTPoint* point) {
+                return @(reducedMatrix.valueAt(point));
+            }]
+            foldLeftWithStart:@0
+            reduce:^id(NSNumber* accumulator, NSNumber* next) {
+                return @(accumulator.intValue + next.intValue);
+            }]
+            intValue];
 
         [self animateTileViewsToCreate:tileViewsToCreate
                                   move:tileViewsToMove
