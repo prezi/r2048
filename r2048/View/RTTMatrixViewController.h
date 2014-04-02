@@ -8,6 +8,6 @@
 @interface RTTMatrixViewController : UIViewController
 
 @property (nonatomic, readonly) RACCommand* resetGameCommand;
-@property (nonatomic, assign) int score;
+@property (nonatomic, readonly) int score;
 
 @end

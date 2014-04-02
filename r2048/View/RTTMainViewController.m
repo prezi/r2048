@@ -13,7 +13,7 @@
 static NSString *const kBestScoreKey = @"kBestScoreKey";
 
 @interface RTTMainViewController ()
-@property (nonatomic, assign) int bestScore;
+@property (nonatomic) int bestScore;
 @end
 
 @implementation RTTMainViewController

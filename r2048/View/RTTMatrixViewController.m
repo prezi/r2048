@@ -15,7 +15,8 @@
 #import "UIView+RTTClear.h"
 
 @interface RTTMatrixViewController ()
-@property (nonatomic, strong) RTTMatrix* matrix;
+@property (nonatomic) RTTMatrix* matrix;
+@property (nonatomic, readwrite) int score;
 @end
 
 @implementation RTTMatrixViewController
