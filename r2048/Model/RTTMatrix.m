@@ -3,13 +3,14 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "RTTMatrix.h"
-#import "RTTTile.h"
-#import "RTTPoint.h"
-#import "RTTVector.h"
-#import "NSArray+RTTVectors.h"
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSArray+RTTTiles.h"
+#import "NSArray+RTTVectors.h"
+#import "RTTPoint.h"
+#import "RTTTile.h"
+#import "RTTVector.h"
 
 static NSDictionary* reduceDic;
 
@@ -38,7 +39,7 @@ static NSDictionary* reduceDic;
     }
 }
 
-+ (instancetype)empty {
++ (instancetype)matrix {
     NSArray* result = [NSArray new];
 
     for (short y = 0; y < kMatrixSize; y++) {
@@ -49,10 +50,10 @@ static NSDictionary* reduceDic;
         result = [result arrayByAddingObject:row];
     }
 
-    return [[RTTMatrix alloc] initWithMatrix:result];
+    return [[RTTMatrix alloc] initWith2DArray:result];
 }
 
-- (instancetype)initWithMatrix:(NSArray*)matrix {
+- (instancetype)initWith2DArray:(NSArray*)matrix {
     self = [super init];
     if (self) {
        _matrix = [matrix copy];
@@ -63,19 +64,21 @@ static NSDictionary* reduceDic;
 #pragma mark - Queries
 
 RTTMatrix* emptyMatrix() {
-    return [RTTMatrix empty];
+    return [RTTMatrix matrix];
 }
 
-- (int(^)(const RTTPoint*))valueAt {
-    return ^(const RTTPoint* p) {
+- (int(^)(RTTPoint*))valueAt {
+    return ^(RTTPoint* p) {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
-        RTTTile* tile = self.matrix[(NSUInteger)p.y][(NSUInteger)p.x];
+        RTTTile* tile = self.matrix[p.y][p.x];
         return tile.value;
     };
 }
 
 - (BOOL)isEqual:(id)object {
     RTTMatrix* otherMatrix = (RTTMatrix*)object;
+    if (self == otherMatrix) return YES;
+    if (otherMatrix == nil) return NO;
 
     for (short y = 0; y < kMatrixSize; y++) {
         for (short x = 0; x < kMatrixSize; x++) {
@@ -106,7 +109,7 @@ RTTMatrix* emptyMatrix() {
 - (NSArray*(^)())getEmptyPositions {
     return ^{
         return [[[self.matrix.rac_sequence map:^id(NSArray* row) {
-            return row.invertTiles().removeZeroTiles().convertTilesToPoints().rac_sequence;
+            return row.flipTiles().removeZeroTiles().convertTilesToPoints().rac_sequence;
         }] flatten] array];
     };
 }
@@ -149,7 +152,7 @@ RTTMatrix* emptyMatrix() {
 - (RTTTile*(^)())getNewRandomTile {
     return ^{
         NSArray* emptyPoints = self.getEmptyPositions();
-        NSUInteger index = arc4random_uniform(emptyPoints.count);
+        NSUInteger index = arc4random_uniform([emptyPoints count]);
         int value = (arc4random() % 100) > 90 ? 4 : 2;
         return tile(emptyPoints[index], value);
     };
@@ -157,8 +160,8 @@ RTTMatrix* emptyMatrix() {
 
 #pragma mark - Operations
 
-- (RTTMatrix*(^)(const RTTPoint*, int))addValue {
-    return ^(const RTTPoint* p, int value) {
+- (RTTMatrix*(^)(RTTPoint*, int))addValue {
+    return ^(RTTPoint* p, int value) {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
         RTTAssert(value % 2 == 0);
 
@@ -173,12 +176,12 @@ RTTMatrix* emptyMatrix() {
 
         mutableRow[(NSUInteger)p.x] = tile(p, newValue);
         mutableCopy[y] = [mutableRow copy];
-        return [[RTTMatrix alloc] initWithMatrix:mutableCopy];
+        return [[RTTMatrix alloc] initWith2DArray:mutableCopy];
     };
 }
 
-- (RTTMatrix*(^)(const RTTPoint*, int))substractValue {
-    return ^(const RTTPoint* p, int value) {
+- (RTTMatrix*(^)(RTTPoint*, int))subtractValue {
+    return ^(RTTPoint* p, int value) {
         return self.addValue(p, -value);
     };
 }
@@ -189,7 +192,7 @@ RTTMatrix* emptyMatrix() {
         for (NSObject* o in reduceVectors) {
             if ([o isMemberOfClass:[RTTVector class]]) {
                 RTTVector* v = (RTTVector*)o;
-                result = result.substractValue(v.from, self.valueAt(v.from)).addValue(v.to, self.valueAt(v.from));
+                result = result.subtractValue(v.from, self.valueAt(v.from)).addValue(v.to, self.valueAt(v.from));
             } else if ([o isMemberOfClass:[RTTTile class]]){
                 RTTTile* t = (RTTTile*)o;
                 result = result.addValue(t.point, t.value);

@@ -11,8 +11,8 @@
 @property (nonatomic, readonly) RTTPoint* to;
 @property (nonatomic, readonly) BOOL isMerge;
 
-RTTVector* vector(const RTTPoint* from, const RTTPoint* to);
-RTTVector* mergevector(const RTTPoint* from, const RTTPoint* to);
+RTTVector* vector(RTTPoint* from, RTTPoint* to);
+RTTVector* mergevector(RTTPoint* from, RTTPoint* to);
 - (RTTVector*(^)())rotateRight;
 - (BOOL)isZeroVector;
 

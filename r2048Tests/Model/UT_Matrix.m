@@ -12,11 +12,11 @@ SPEC_BEGIN(MatrixSpec)
 describe(@"Matrix", ^{
     
     __block RTTMatrix* sut = nil;
-    __block const RTTPoint* p00 = point(0, 0);
-    __block const RTTPoint* p10 = point(1, 0);
-    __block const RTTPoint* p01 = point(0, 1);
-    __block const RTTPoint* p20 = point(2, 0);
-    __block const RTTPoint* p30 = point(3, 0);
+    __block RTTPoint* p00 = point(0, 0);
+    __block RTTPoint* p10 = point(1, 0);
+    __block RTTPoint* p01 = point(0, 1);
+    __block RTTPoint* p20 = point(2, 0);
+    __block RTTPoint* p30 = point(3, 0);
 
     beforeEach(^{
         sut = emptyMatrix();
@@ -144,7 +144,7 @@ describe(@"Matrix", ^{
             sut = sut.addValue(p00, 2);
 
             // when
-            sut = sut.substractValue(p00, 2);
+            sut = sut.subtractValue(p00, 2);
 
             // then
             [[sut should] equal:emptyMatrix()];
@@ -155,7 +155,7 @@ describe(@"Matrix", ^{
             sut = sut.addValue(p00, 2).addValue(point(1, 1), 4);
 
             // when
-            sut = sut.substractValue(p00, 2);
+            sut = sut.subtractValue(p00, 2);
 
             // then
             [[sut should] equal:emptyMatrix().addValue(point(1, 1), 4)];

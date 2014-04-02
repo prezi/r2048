@@ -5,7 +5,7 @@
 
 @interface RTTScoreView : UIView
 
-@property (nonatomic, assign) int points;
+@property (nonatomic, assign) int score;
 @property (nonatomic, assign) BOOL animateChange;
 
 - (instancetype)initWithFrame:(CGRect)frame andTitle:(NSString *)title;

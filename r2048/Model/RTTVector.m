@@ -8,23 +8,23 @@
 
 @implementation RTTVector
 
-RTTVector* vector(const RTTPoint* from, const RTTPoint* to) {
+RTTVector* vector(RTTPoint* from, RTTPoint* to) {
     return _vector(from, to, NO);
 }
 
-RTTVector* mergevector(const RTTPoint* from, const RTTPoint* to) {
+RTTVector* mergevector(RTTPoint* from, RTTPoint* to) {
     return _vector(from, to, YES);
 }
 
-RTTVector* _vector(const RTTPoint* from, const RTTPoint* to, BOOL isMerge) {
+RTTVector* _vector(RTTPoint* from, RTTPoint* to, BOOL isMerge) {
     return [RTTVector vectorWithFrom:from to:to isMerge:isMerge];
 }
 
-+ (instancetype)vectorWithFrom:(const RTTPoint*)from to:(const RTTPoint*)to isMerge:(BOOL)isMerge {
++ (instancetype)vectorWithFrom:(RTTPoint*)from to:(RTTPoint*)to isMerge:(BOOL)isMerge {
     return [[self alloc] initWithFrom:from to:to isMerge:isMerge];
 }
 
-- (instancetype)initWithFrom:(const RTTPoint*)from to:(const RTTPoint*)to isMerge:(BOOL)isMerge {
+- (instancetype)initWithFrom:(RTTPoint*)from to:(RTTPoint*)to isMerge:(BOOL)isMerge {
     self = [super init];
     if (self) {
         _from = (RTTPoint*)from;

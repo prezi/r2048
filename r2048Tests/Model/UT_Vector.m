@@ -4,20 +4,20 @@
 //
 
 #import <Kiwi/Kiwi.h>
-#import "RTTVector.h"
-#import "RTTPoint.h"
-#import "RTTTile.h"
 #import "NSArray+RTTTiles.h"
 #import "NSArray+RTTVectors.h"
+#import "RTTPoint.h"
+#import "RTTTile.h"
+#import "RTTVector.h"
 
 SPEC_BEGIN(VectorSpec)
 
 describe(@"Matrix", ^{
     
-    __block const RTTPoint* p00 = point(0, 0);
-    __block const RTTPoint* p10 = point(1, 0);
-    __block const RTTPoint* p20 = point(2, 0);
-    __block const RTTPoint* p30 = point(3, 0);
+    __block RTTPoint* p00 = point(0, 0);
+    __block RTTPoint* p10 = point(1, 0);
+    __block RTTPoint* p20 = point(2, 0);
+    __block RTTPoint* p30 = point(3, 0);
 
     context(@"rotation", ^ {
 

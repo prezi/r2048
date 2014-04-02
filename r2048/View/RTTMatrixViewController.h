@@ -3,11 +3,12 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
+@class RACCommand;
 @class RTTMatrix;
 
 @interface RTTMatrixViewController : UIViewController
 
 @property (nonatomic, readonly) RACCommand* resetGameCommand;
-@property (nonatomic, assign) int score;
+@property (nonatomic, readonly) int score;
 
 @end

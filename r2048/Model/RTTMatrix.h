@@ -10,7 +10,7 @@
 
 RTTMatrix* emptyMatrix();
 
-- (int(^)(const RTTPoint*))valueAt;
+- (int(^)(RTTPoint*))valueAt;
 
 - (NSArray*(^)( NSNumber*))mapDirectionToReduceVectors;
 - (NSArray*(^)())getEmptyPositions;
@@ -18,8 +18,8 @@ RTTMatrix* emptyMatrix();
 - (BOOL(^)())isOver;
 - (RTTTile*(^)())getNewRandomTile;
 
-- (RTTMatrix*(^)(const RTTPoint*, int))addValue;
-- (RTTMatrix*(^)(const RTTPoint*, int))substractValue;
+- (RTTMatrix*(^)(RTTPoint*, int))addValue;
+- (RTTMatrix*(^)(RTTPoint*, int))subtractValue;
 - (RTTMatrix*(^)(NSArray*))applyReduceVectors;
 - (RTTMatrix*(^)())rotateRight;
 - (RTTMatrix*(^)())transpose;

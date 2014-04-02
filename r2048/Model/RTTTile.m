@@ -8,15 +8,15 @@
 
 @implementation RTTTile
 
-RTTTile* tile(const RTTPoint* point, int value) {
+RTTTile* tile(RTTPoint* point, int value) {
     return [RTTTile tileWithPoint:point value:value];
 }
 
-+ (instancetype)tileWithPoint:(const RTTPoint*)point value:(int)value {
++ (instancetype)tileWithPoint:(RTTPoint*)point value:(int)value {
     return [[self alloc] initWithPoint:point value:value];
 }
 
-- (instancetype)initWithPoint:(const RTTPoint*)point value:(int)value {
+- (instancetype)initWithPoint:(RTTPoint*)point value:(int)value {
     self = [super init];
     if (self) {
         _point = (RTTPoint* )point;
@@ -26,7 +26,7 @@ RTTTile* tile(const RTTPoint* point, int value) {
     return self;
 }
 
-- (RTTTile* (^)())invert {
+- (RTTTile* (^)())flip {
     return ^{
         return tile(self.point, self.value == 0 ? 2 : 0);
     };
