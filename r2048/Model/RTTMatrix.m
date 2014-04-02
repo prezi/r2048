@@ -39,7 +39,7 @@ static NSDictionary* reduceDic;
     }
 }
 
-+ (instancetype)empty {
++ (instancetype)matrix {
     NSArray* result = [NSArray new];
 
     for (short y = 0; y < kMatrixSize; y++) {
@@ -50,10 +50,10 @@ static NSDictionary* reduceDic;
         result = [result arrayByAddingObject:row];
     }
 
-    return [[RTTMatrix alloc] initWithMatrix:result];
+    return [[RTTMatrix alloc] initWith2DArray:result];
 }
 
-- (instancetype)initWithMatrix:(NSArray*)matrix {
+- (instancetype)initWith2DArray:(NSArray*)matrix {
     self = [super init];
     if (self) {
        _matrix = [matrix copy];
@@ -64,7 +64,7 @@ static NSDictionary* reduceDic;
 #pragma mark - Queries
 
 RTTMatrix* emptyMatrix() {
-    return [RTTMatrix empty];
+    return [RTTMatrix matrix];
 }
 
 - (int(^)(const RTTPoint*))valueAt {
@@ -174,7 +174,7 @@ RTTMatrix* emptyMatrix() {
 
         mutableRow[(NSUInteger)p.x] = tile(p, newValue);
         mutableCopy[y] = [mutableRow copy];
-        return [[RTTMatrix alloc] initWithMatrix:mutableCopy];
+        return [[RTTMatrix alloc] initWith2DArray:mutableCopy];
     };
 }
 
