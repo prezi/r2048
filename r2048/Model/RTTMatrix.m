@@ -107,7 +107,7 @@ RTTMatrix* emptyMatrix() {
 - (NSArray*(^)())getEmptyPositions {
     return ^{
         return [[[self.matrix.rac_sequence map:^id(NSArray* row) {
-            return row.invertTiles().removeZeroTiles().convertTilesToPoints().rac_sequence;
+            return row.flipTiles().removeZeroTiles().convertTilesToPoints().rac_sequence;
         }] flatten] array];
     };
 }

@@ -48,10 +48,10 @@
     };
 }
 
-- (NSArray *(^)())invertTiles {
+- (NSArray *(^)())flipTiles {
     return ^{
         return [[self.rac_sequence map:^id(RTTTile* tile) {
-            return tile.invert();
+            return tile.flip();
         }] array];;
     };
 }

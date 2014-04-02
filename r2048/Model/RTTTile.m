@@ -26,7 +26,7 @@ RTTTile* tile(const RTTPoint* point, int value) {
     return self;
 }
 
-- (RTTTile* (^)())invert {
+- (RTTTile* (^)())flip {
     return ^{
         return tile(self.point, self.value == 0 ? 2 : 0);
     };
