@@ -101,10 +101,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     retryButton.rac_command = _resetGameCommand;
 
     // on reset button tap add two random tiles to the signal stream
-    RACSignal* createInitialTilesSignal = [[[self.resetGameCommand executing]
-        filter:^BOOL(NSNumber* executing) {
-            return [executing boolValue];
-        }]
+    RACSignal* createInitialTilesSignal = [self.resetGameCommand.executionSignals
         map:^id(id value) {
             RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
             RTTTile* secondRandomTile = self.matrix.applyReduceVectors(@[firstRandomTile]).getNewRandomTile();
@@ -136,18 +133,19 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
             return [vectors count] > 0;
         }];
 
-    // after every swipe add one random tile the signal stream
-    vectorSignal = [vectorSignal
+    RACSignal* vectorsWithRandomTileSignal = [vectorSignal
         map:^id(NSArray* vectors) {
+            // after every swipe add one random tile the signal stream
             RTTTile* tile = self.matrix.applyReduceVectors(vectors).getNewRandomTile();
             return [vectors arrayByAddingObject:tile];
         }];
 
     // do the animations either if event arrives from swipe or from reset button
-    vectorSignal = [RACSignal merge:@[vectorSignal, createInitialTilesSignal]];
+    RACSignal* tilesAndVectorsSignal = [RACSignal
+        merge:@[vectorsWithRandomTileSignal, createInitialTilesSignal]];
 
     // animations as side effects
-    vectorSignal = [vectorSignal doNext:^(NSArray* vectors) {
+    tilesAndVectorsSignal = [tilesAndVectorsSignal doNext:^(NSArray* vectors) {
         NSLog(@"vectors: %@", vectors);
         NSArray* moves = vectors.filterMoves();
         NSArray* creates = vectors.filterCreates();
@@ -224,37 +222,27 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
 
     RACSignal* matrixChangedSignal = RACObserve(self, matrix);
 
-    RACSignal* gameOverChangedSignal = [[matrixChangedSignal
-        filter:^BOOL(RTTMatrix* matrix) {
-            return matrix != nil;
-        }]
+    [[[[[matrixChangedSignal
+        ignore:nil]
         map:^id(RTTMatrix* matrix) {
             return @(matrix.isOver());
-        }];
-
-    RACSignal* gameIsOverSignal = [[gameOverChangedSignal
-        filter:^BOOL(NSNumber* gameOver) {
-            return [gameOver boolValue];
         }]
-        delay:kSlideAnimDuration + kScaleAnimDuration];
-
-    // apply the changes to the matrix
-    RACSignal* reduceMatrixSignal = [vectorSignal
-        map:^id(NSArray* vectors) {
-            return self.matrix.applyReduceVectors(vectors);
-        }];
-
-    // use signals
-
-    // assign the new matrix to itself
-    RAC(self, matrix) = reduceMatrixSignal;
-
-    [gameIsOverSignal
+        ignore:@NO]
+        delay:kSlideAnimDuration + kScaleAnimDuration]
         subscribeNext:^(id x) {
             [UIView animateWithDuration:kSlideAnimDuration * 4.0f animations:^{
                 gameOverView.alpha = 1.0f;
             }];
         }];
+
+    // apply the changes to the matrix
+    RACSignal* reducedMatrixSignal = [tilesAndVectorsSignal
+        map:^id(NSArray* vectors) {
+            return self.matrix.applyReduceVectors(vectors);
+        }];
+
+    // assign the new matrix to itself
+    RAC(self, matrix) = reducedMatrixSignal;
 
     // log
     [matrixChangedSignal
