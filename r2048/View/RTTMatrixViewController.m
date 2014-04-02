@@ -21,6 +21,7 @@
 @end
 
 @implementation RTTMatrixViewController
+
 - (void)loadView {
     self.view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, kTableSize, kTableSize)];
     self.view.backgroundColor = [UIColor fromHex:0xbbada0];
@@ -46,11 +47,10 @@
     [retryButton setTitleColor:[UIColor fromHex:0xf9f6f2] forState:UIControlStateNormal];
     retryButton.titleLabel.font = [UIFont boldSystemFontOfSize:13.0f];
     retryButton.backgroundColor = [UIColor fromHex:0x8f7a66];
-    retryButton.frame = CGRectMake(
-            (CGRectGetWidth(gameOverView.bounds) - kButtonWidth) * 0.5f,
-            160.0f,
-            kButtonWidth,
-            kButtonHeight);
+    retryButton.frame = CGRectMake((CGRectGetWidth(gameOverView.bounds) - kButtonWidth) * 0.5f,
+                                   160.0f,
+                                   kButtonWidth,
+                                   kButtonHeight);
     retryButton.layer.cornerRadius = 3.0f;
     retryButton.showsTouchWhenHighlighted = YES;
     [gameOverView addSubview:retryButton];
@@ -58,11 +58,10 @@
 
     // helper functions
     CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
-        return CGRectMake(
-                kTileGap + kTileDelta * point.x,
-                kTileGap + kTileDelta * point.y,
-                kTileSize,
-                kTileSize);
+        return CGRectMake(kTileGap + kTileDelta * point.x,
+                          kTileGap + kTileDelta * point.y,
+                          kTileSize,
+                          kTileSize);
     };
 
     RACSequence* (^mapTileViewsForPoint)(RTTPoint*) = ^RACSequence* (RTTPoint* point) {
@@ -81,9 +80,11 @@
     };
 
     // draw background tiles
-    [[[emptyMatrix().getTiles().rac_sequence map:mapTileToTileView].signal deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RTTTileView* tileView) {
-        [self.view insertSubview:tileView belowSubview:gameView];
-    }];
+    [[[emptyMatrix().getTiles().rac_sequence map:mapTileToTileView].signal
+        deliverOn:[RACScheduler mainThreadScheduler]]
+        subscribeNext:^(RTTTileView* tileView) {
+            [self.view insertSubview:tileView belowSubview:gameView];
+        }];
 
     // game logic
     _resetGameCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal*(id input) {
@@ -99,13 +100,15 @@
     retryButton.rac_command = _resetGameCommand;
 
     // on reset button tap add two random tiles to the signal stream
-    RACSignal* createInitialTilesSignal = [[[self.resetGameCommand executing] filter:^BOOL(NSNumber* executing) {
-        return executing.boolValue;
-    }] map:^id(id value) {
-        RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
-        RTTTile* secondRandomTile = self.matrix.applyReduceVectors(@[firstRandomTile]).getNewRandomTile();
-        return @[firstRandomTile, secondRandomTile];
-    }];
+    RACSignal* createInitialTilesSignal = [[[self.resetGameCommand executing]
+        filter:^BOOL(NSNumber* executing) {
+            return executing.boolValue;
+        }]
+        map:^id(id value) {
+            RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
+            RTTTile* secondRandomTile = self.matrix.applyReduceVectors(@[firstRandomTile]).getNewRandomTile();
+            return @[firstRandomTile, secondRandomTile];
+        }];
 
     // add gesture recognizers
     NSArray* signalArray = [NSArray new];
@@ -124,17 +127,19 @@
     RACSignal* swipeSignal = [RACSignal merge:signalArray];
 
     // map the directions to animation vectors
-    RACSignal* vectorSignal = [[swipeSignal map:^id(NSNumber* direction) {
-        return self.matrix.mapDirectionToReduceVectors(direction);
-    }] filter:^BOOL(NSArray* vectors) {
-        return vectors.count > 0;
-    }];
+    RACSignal* vectorSignal = [[swipeSignal
+        map:^id(NSNumber* direction) {
+            return self.matrix.mapDirectionToReduceVectors(direction);
+        }] filter:^BOOL(NSArray* vectors) {
+            return vectors.count > 0;
+        }];
 
     // after every swipe add one random tile the signal stream
-    vectorSignal = [vectorSignal map:^id(NSArray* vectors) {
-        RTTTile* tile = self.matrix.applyReduceVectors(vectors).getNewRandomTile();
-        return [vectors arrayByAddingObject:tile];
-    }];
+    vectorSignal = [vectorSignal
+        map:^id(NSArray* vectors) {
+            RTTTile* tile = self.matrix.applyReduceVectors(vectors).getNewRandomTile();
+            return [vectors arrayByAddingObject:tile];
+        }];
 
     // do the animations either if event arrives from swipe or from reset button
     vectorSignal = [RACSignal merge:@[vectorSignal, createInitialTilesSignal]];
@@ -248,36 +253,43 @@
 
     RACSignal* matrixChangedSignal = RACObserve(self, matrix);
 
-    RACSignal* gameOverChangedSignal = [[matrixChangedSignal filter:^BOOL(RTTMatrix* matrix) {
-        return matrix != nil;
-    }] map:^id(RTTMatrix* matrix) {
-        return @(matrix.isOver());
-    }];
+    RACSignal* gameOverChangedSignal = [[matrixChangedSignal
+        filter:^BOOL(RTTMatrix* matrix) {
+            return matrix != nil;
+        }]
+        map:^id(RTTMatrix* matrix) {
+            return @(matrix.isOver());
+        }];
 
-    RACSignal* gameIsOverSignal = [[gameOverChangedSignal filter:^BOOL(NSNumber* gameOver) {
-        return gameOver.boolValue;
-    }] delay:kSlideAnimDuration + kScaleAnimDuration];
+    RACSignal* gameIsOverSignal = [[gameOverChangedSignal
+        filter:^BOOL(NSNumber* gameOver) {
+            return gameOver.boolValue;
+        }]
+        delay:kSlideAnimDuration + kScaleAnimDuration];
 
     // apply the changes to the matrix
-    RACSignal* reduceMatrixSignal = [vectorSignal map:^id(NSArray* vectors) {
-        return self.matrix.applyReduceVectors(vectors);
-    }];
+    RACSignal* reduceMatrixSignal = [vectorSignal
+        map:^id(NSArray* vectors) {
+            return self.matrix.applyReduceVectors(vectors);
+        }];
 
     // use signals
 
     // assign the new matrix to itself
     RAC(self, matrix) = reduceMatrixSignal;
 
-    [gameIsOverSignal subscribeNext:^(id x) {
-        [UIView animateWithDuration:kSlideAnimDuration * 4.0f animations:^{
-            gameOverView.alpha = 1.0f;
+    [gameIsOverSignal
+        subscribeNext:^(id x) {
+            [UIView animateWithDuration:kSlideAnimDuration * 4.0f animations:^{
+                gameOverView.alpha = 1.0f;
+            }];
         }];
-    }];
 
     // log
-    [matrixChangedSignal subscribeNext:^(RTTMatrix* x) {
-        NSLog(@"matrix: %@", x);
-    }];
+    [matrixChangedSignal
+        subscribeNext:^(RTTMatrix* x) {
+            NSLog(@"matrix: %@", x);
+        }];
 
     // starts
     [self.resetGameCommand execute:nil];
