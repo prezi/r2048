@@ -7,7 +7,7 @@
 #import "UIColor+RTTFromHex.h"
 
 @implementation RTTScoreView {
-    UILabel* scoreLabel;
+    UILabel* _scoreLabel;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame andTitle:(NSString *)title {
@@ -24,12 +24,12 @@
         titleLabel.text = title;
         [self addSubview:titleLabel];
 
-        scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 5.0f + kButtonHeight * 0.3f, self.bounds.size.width, kButtonHeight * 0.7f - 10.0f)];
-        scoreLabel.textColor = [UIColor whiteColor];
-        scoreLabel.font = [UIFont boldSystemFontOfSize:15.0f];
-        scoreLabel.textAlignment = NSTextAlignmentCenter;
-        scoreLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
-        [self addSubview:scoreLabel];
+        _scoreLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 5.0f + kButtonHeight * 0.3f, self.bounds.size.width, kButtonHeight * 0.7f - 10.0f)];
+        _scoreLabel.textColor = [UIColor whiteColor];
+        _scoreLabel.font = [UIFont boldSystemFontOfSize:15.0f];
+        _scoreLabel.textAlignment = NSTextAlignmentCenter;
+        _scoreLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
+        [self addSubview:_scoreLabel];
 
     }
     return self;
@@ -38,7 +38,7 @@
 - (void)setScore:(int)score {
     int diff = score - _score;
     if (diff > 0 && self.animateChange) {
-        UILabel *flyingLabel = [[UILabel alloc] initWithFrame:scoreLabel.frame];
+        UILabel *flyingLabel = [[UILabel alloc] initWithFrame:_scoreLabel.frame];
         flyingLabel.textColor = [UIColor fromHex:0x776e65];
         flyingLabel.font = [UIFont boldSystemFontOfSize:15.0f];
         flyingLabel.textAlignment = NSTextAlignmentCenter;
@@ -67,7 +67,7 @@
     }
 
     _score = score;
-    scoreLabel.text = [NSString stringWithFormat:@"%d", score];
+    _scoreLabel.text = [NSString stringWithFormat:@"%d", score];
 }
 
 @end
