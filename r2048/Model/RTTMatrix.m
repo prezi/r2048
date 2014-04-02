@@ -77,6 +77,8 @@ RTTMatrix* emptyMatrix() {
 
 - (BOOL)isEqual:(id)object {
     RTTMatrix* otherMatrix = (RTTMatrix*)object;
+    if (self == otherMatrix) return YES;
+    if (otherMatrix == nil) return NO;
 
     for (short y = 0; y < kMatrixSize; y++) {
         for (short x = 0; x < kMatrixSize; x++) {
