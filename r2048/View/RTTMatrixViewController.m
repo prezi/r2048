@@ -20,6 +20,14 @@
 @property (nonatomic, readwrite) int score;
 @end
 
+static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
+    return CGRectMake(kTileGap + kTileDelta * point.x,
+                      kTileGap + kTileDelta * point.y,
+                      kTileSize,
+                      kTileSize);
+};
+
+
 @implementation RTTMatrixViewController
 
 - (void)loadView {
@@ -57,13 +65,6 @@
     [self.view addSubview:gameOverView];
 
     // helper functions
-    CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
-        return CGRectMake(kTileGap + kTileDelta * point.x,
-                          kTileGap + kTileDelta * point.y,
-                          kTileSize,
-                          kTileSize);
-    };
-
     RACSequence* (^mapTileViewsForPoint)(RTTPoint*) = ^RACSequence* (RTTPoint* point) {
         return [gameView.subviews.rac_sequence filter:^BOOL(RTTTileView* tileView) {
             return [tileView.point isEqual:point];
@@ -154,17 +155,17 @@
         RTTMatrix* reducedMatrix = self.matrix.applyReduceVectors(vectors);
 
         // moves
-        NSArray* tilesToMove = [[[moves.rac_sequence map:^id(RTTVector* vector) {
+        NSArray* tileViewsToMove = [[[moves.rac_sequence map:^id(RTTVector* vector) {
             return vector.from;
         }] map:firstTileViewsForPoint] array];
 
         // remove old tileviewss
-        for (RTTTileView* tileView in tilesToMove) {
+        for (RTTTileView* tileView in tileViewsToMove) {
             [tileView removeFromSuperview];
         }
 
         // create replace tiles, copy frame and change point, because tileviews are immutables
-        tilesToMove = [[[moves.rac_sequence zipWith:tilesToMove.rac_sequence] map:^id(RACTuple* tuple) {
+        tileViewsToMove = [[[moves.rac_sequence zipWith:tileViewsToMove.rac_sequence] map:^id(RACTuple* tuple) {
             RTTVector* vector = tuple.first;
             RTTTileView* tileView = tuple.second;
 
@@ -173,20 +174,20 @@
             return replaceTileView;
         }] array];
 
-        for (RTTTileView* tileView in tilesToMove) {
+        for (RTTTileView* tileView in tileViewsToMove) {
             [gameView insertSubview:tileView atIndex:0];
         }
 
         // collect tiles to remove after merge
-        NSArray* tilesToRemoveAfterMerge = [[[merges.rac_sequence map:mapTileViewsForPoint] flatten] array];
+        NSArray* tileViewsToDiscard = [[[merges.rac_sequence map:mapTileViewsForPoint] flatten] array];
 
         // get merged tiles
-        NSArray* mergeTileViews = [[[merges.rac_sequence map:^id(RTTPoint* point) {
+        NSArray* tileViewsToMerge = [[[merges.rac_sequence map:^id(RTTPoint* point) {
             return tile(point, reducedMatrix.valueAt(point));
         }] map:mapTileToTileView] array];
 
         // get to creat tileviews
-        NSArray* toCreateTileViews = [[creates.rac_sequence map:mapTileToTileView] array];
+        NSArray* tileViewsToCreate = [[creates.rac_sequence map:mapTileToTileView] array];
 
         // set score
         self.score += [[[merges.rac_sequence map:^id(RTTPoint* point) {
@@ -195,60 +196,11 @@
             return @(accumulator.intValue + next.intValue);
         }] intValue];
 
-        // create animations
-        for (RTTTileView* tileView in toCreateTileViews) {
-            tileView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
-            tileView.alpha = 0.0f;
-            [gameView addSubview:tileView];
-        }
-        [UIView animateWithDuration:kScaleAnimDuration
-                              delay:kSlideAnimDuration
-                            options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{
-             for (RTTTileView* tileView in toCreateTileViews) {
-                 tileView.alpha = 1.0f;
-                 tileView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
-             }
-        } completion:nil];
-
-        // move animation
-        [UIView animateWithDuration:kSlideAnimDuration
-                          delay:0.0f
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-            for (RTTTileView* tile in tilesToMove) {
-                tile.frame = mapPointToFrame(tile.point);
-            }
-        } completion:^(BOOL finished) {
-
-            // add merge tiles now
-            for (RTTTileView* tileView in mergeTileViews) {
-                tileView.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
-                [gameView addSubview:tileView];
-            }
-
-            // merge animations
-            [UIView animateKeyframesWithDuration:kScaleAnimDuration
-                                           delay:0.0f
-                                         options:UIViewKeyframeAnimationOptionCalculationModeCubic
-                                      animations:^{
-                for (RTTTileView* tileView in mergeTileViews) {
-                    [UIView addKeyframeWithRelativeStartTime:0.0f relativeDuration:0.5f animations:^{
-                        tileView.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
-                    }];
-                    [UIView addKeyframeWithRelativeStartTime:0.5f relativeDuration:0.5f animations:^{
-                        tileView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
-                    }];
-                }
-            } completion:^(BOOL finished2) {
-                // remove the merge sources
-                for (RTTTileView* tileView in tilesToRemoveAfterMerge) {
-                    [tileView removeFromSuperview];
-                }
-            }];
-
-        }];
-
+        [self animateTileViewsToCreate:tileViewsToCreate
+                                  move:tileViewsToMove
+                                 merge:tileViewsToMerge
+                               discard:tileViewsToDiscard
+                                inView:gameView];
     }];
 
     RACSignal* matrixChangedSignal = RACObserve(self, matrix);
@@ -263,7 +215,7 @@
 
     RACSignal* gameIsOverSignal = [[gameOverChangedSignal
         filter:^BOOL(NSNumber* gameOver) {
-            return gameOver.boolValue;
+            return [gameOver boolValue];
         }]
         delay:kSlideAnimDuration + kScaleAnimDuration];
 
@@ -293,6 +245,67 @@
 
     // starts
     [self.resetGameCommand execute:nil];
+}
+
+- (void)animateTileViewsToCreate:(NSArray*)tileViewsToCreate
+                            move:(NSArray*)tileViewsToMove
+                           merge:(NSArray*)tileViewsToMerge
+                         discard:(NSArray*)tileViewsToDiscard
+                          inView:(UIView*)container {
+    // create animations
+    for (RTTTileView* tileView in tileViewsToCreate) {
+        tileView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+        tileView.alpha = 0.0f;
+        [container addSubview:tileView];
+    }
+    [UIView animateWithDuration:kScaleAnimDuration
+                          delay:kSlideAnimDuration
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         for (RTTTileView* tileView in tileViewsToCreate) {
+                             tileView.alpha = 1.0f;
+                             tileView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+                         }
+                     }
+                     completion:nil];
+
+    // move animation
+    [UIView animateWithDuration:kSlideAnimDuration
+                      delay:0.0f
+                    options:UIViewAnimationOptionCurveEaseIn
+                 animations:^{
+        for (RTTTileView* tile in tileViewsToMove) {
+            tile.frame = mapPointToFrame(tile.point);
+        }
+    } completion:^(BOOL finished) {
+
+        // add merge tiles now
+        for (RTTTileView* tileView in tileViewsToMerge) {
+            tileView.transform = CGAffineTransformMakeScale(0.6f, 0.6f);
+            [container addSubview:tileView];
+        }
+
+        // merge animations
+        [UIView animateKeyframesWithDuration:kScaleAnimDuration
+                                       delay:0.0f
+                                     options:UIViewKeyframeAnimationOptionCalculationModeCubic
+                                  animations:^{
+            for (RTTTileView* tileView in tileViewsToMerge) {
+                [UIView addKeyframeWithRelativeStartTime:0.0f relativeDuration:0.5f animations:^{
+                    tileView.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
+                }];
+                [UIView addKeyframeWithRelativeStartTime:0.5f relativeDuration:0.5f animations:^{
+                    tileView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+                }];
+            }
+        } completion:^(BOOL finished2) {
+            // remove the merge sources
+            for (RTTTileView* tileView in tileViewsToDiscard) {
+                [tileView removeFromSuperview];
+            }
+        }];
+
+    }];
 }
 
 @end
