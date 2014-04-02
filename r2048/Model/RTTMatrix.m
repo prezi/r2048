@@ -67,10 +67,10 @@ RTTMatrix* emptyMatrix() {
     return [RTTMatrix matrix];
 }
 
-- (int(^)(const RTTPoint*))valueAt {
-    return ^(const RTTPoint* p) {
+- (int(^)(RTTPoint*))valueAt {
+    return ^(RTTPoint* p) {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
-        RTTTile* tile = self.matrix[(NSUInteger)p.y][(NSUInteger)p.x];
+        RTTTile* tile = self.matrix[p.y][p.x];
         return tile.value;
     };
 }
@@ -158,8 +158,8 @@ RTTMatrix* emptyMatrix() {
 
 #pragma mark - Operations
 
-- (RTTMatrix*(^)(const RTTPoint*, int))addValue {
-    return ^(const RTTPoint* p, int value) {
+- (RTTMatrix*(^)(RTTPoint*, int))addValue {
+    return ^(RTTPoint* p, int value) {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
         RTTAssert(value % 2 == 0);
 
@@ -178,8 +178,8 @@ RTTMatrix* emptyMatrix() {
     };
 }
 
-- (RTTMatrix*(^)(const RTTPoint*, int))subtractValue {
-    return ^(const RTTPoint* p, int value) {
+- (RTTMatrix*(^)(RTTPoint*, int))subtractValue {
+    return ^(RTTPoint* p, int value) {
         return self.addValue(p, -value);
     };
 }

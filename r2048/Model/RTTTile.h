@@ -10,7 +10,7 @@
 @property (nonatomic, readonly) RTTPoint* point;
 @property (nonatomic, readonly) int value;
 
-RTTTile* tile(const RTTPoint* point, int value);
+RTTTile* tile(RTTPoint* point, int value);
 - (RTTTile* (^)())flip;
 - (RTTPoint* (^)())toPoint;
 
