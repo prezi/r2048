@@ -150,7 +150,7 @@ RTTMatrix* emptyMatrix() {
 - (RTTTile*(^)())getNewRandomTile {
     return ^{
         NSArray* emptyPoints = self.getEmptyPositions();
-        NSUInteger index = arc4random_uniform(emptyPoints.count);
+        NSUInteger index = arc4random_uniform([emptyPoints count]);
         int value = (arc4random() % 100) > 90 ? 4 : 2;
         return tile(emptyPoints[index], value);
     };

@@ -102,7 +102,7 @@
     // on reset button tap add two random tiles to the signal stream
     RACSignal* createInitialTilesSignal = [[[self.resetGameCommand executing]
         filter:^BOOL(NSNumber* executing) {
-            return executing.boolValue;
+            return [executing boolValue];
         }]
         map:^id(id value) {
             RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
@@ -131,7 +131,7 @@
         map:^id(NSNumber* direction) {
             return self.matrix.mapDirectionToReduceVectors(direction);
         }] filter:^BOOL(NSArray* vectors) {
-            return vectors.count > 0;
+            return [vectors count] > 0;
         }];
 
     // after every swipe add one random tile the signal stream
