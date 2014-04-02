@@ -26,5 +26,13 @@ Demo project which shows how we (would like to) develop in Objective C at Prezi.
 
 ### Signals
 
+RTTMainViewController:
+
+![](signals_RTTMainViewController.png "Data flow in RTTMainViewController")
+
+RTTMatrixViewController:
+
+![](signals_RTTMatrixViewController.png "Data flow in RTTMatrixViewController")
+
 ### Animations
 As side effects
