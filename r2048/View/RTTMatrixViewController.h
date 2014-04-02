@@ -3,6 +3,7 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
+@class RACCommand;
 @class RTTMatrix;
 
 @interface RTTMatrixViewController : UIViewController

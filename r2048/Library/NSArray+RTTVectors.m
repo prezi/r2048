@@ -3,10 +3,11 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSArray+RTTVectors.h"
-#import "RTTVector.h"
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "RTTTile.h"
+#import "RTTVector.h"
 
 @implementation NSArray (RTTVectors)
 

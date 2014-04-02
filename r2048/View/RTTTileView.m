@@ -4,9 +4,10 @@
 //
 
 #import "RTTTileView.h"
-#import "UIColor+RTTFromHex.h"
-#import "RTTTile.h"
+
 #import "RTTPoint.h"
+#import "RTTTile.h"
+#import "UIColor+RTTFromHex.h"
 
 static NSDictionary* bgColorDic;
 static NSDictionary* fgColorDic;

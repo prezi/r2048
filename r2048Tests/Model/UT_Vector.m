@@ -4,11 +4,11 @@
 //
 
 #import <Kiwi/Kiwi.h>
-#import "RTTVector.h"
-#import "RTTPoint.h"
-#import "RTTTile.h"
 #import "NSArray+RTTTiles.h"
 #import "NSArray+RTTVectors.h"
+#import "RTTPoint.h"
+#import "RTTTile.h"
+#import "RTTVector.h"
 
 SPEC_BEGIN(VectorSpec)
 

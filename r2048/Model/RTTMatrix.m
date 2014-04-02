@@ -3,13 +3,14 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "RTTMatrix.h"
-#import "RTTTile.h"
-#import "RTTPoint.h"
-#import "RTTVector.h"
-#import "NSArray+RTTVectors.h"
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSArray+RTTTiles.h"
+#import "NSArray+RTTVectors.h"
+#import "RTTPoint.h"
+#import "RTTTile.h"
+#import "RTTVector.h"
 
 static NSDictionary* reduceDic;
 

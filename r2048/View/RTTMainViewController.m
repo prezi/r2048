@@ -3,12 +3,13 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "RTTMainViewController.h"
-#import "UIColor+RTTFromHex.h"
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "RTTMatrixViewController.h"
-#import "RTTScoreView.h"
 #import "RTTPoint.h"
+#import "RTTScoreView.h"
+#import "UIColor+RTTFromHex.h"
 
 static NSString *const kBestScoreKey = @"kBestScoreKey";
 

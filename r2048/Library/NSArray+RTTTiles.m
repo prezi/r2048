@@ -4,11 +4,12 @@
 //
 
 #import "NSArray+RTTTiles.h"
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "NSArray+RTTVectors.h"
+#import "RTTPoint.h"
 #import "RTTTile.h"
 #import "RTTVector.h"
-#import "RTTPoint.h"
-#import "NSArray+RTTVectors.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
 
 @implementation NSArray (RTTTiles)
 

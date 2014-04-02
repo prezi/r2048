@@ -3,15 +3,16 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "RTTMatrixViewController.h"
-#import "UIColor+RTTFromHex.h"
-#import "RTTTileView.h"
-#import "RTTMatrix.h"
-#import "RTTTile.h"
-#import "RTTPoint.h"
+
+#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "NSArray+RTTVectors.h"
+#import "RTTMatrix.h"
+#import "RTTPoint.h"
+#import "RTTTile.h"
+#import "RTTTileView.h"
 #import "RTTVector.h"
+#import "UIColor+RTTFromHex.h"
 #import "UIView+RTTClear.h"
 
 @interface RTTMatrixViewController ()
