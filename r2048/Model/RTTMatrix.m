@@ -178,7 +178,7 @@ RTTMatrix* emptyMatrix() {
     };
 }
 
-- (RTTMatrix*(^)(const RTTPoint*, int))substractValue {
+- (RTTMatrix*(^)(const RTTPoint*, int))subtractValue {
     return ^(const RTTPoint* p, int value) {
         return self.addValue(p, -value);
     };
@@ -190,7 +190,7 @@ RTTMatrix* emptyMatrix() {
         for (NSObject* o in reduceVectors) {
             if ([o isMemberOfClass:[RTTVector class]]) {
                 RTTVector* v = (RTTVector*)o;
-                result = result.substractValue(v.from, self.valueAt(v.from)).addValue(v.to, self.valueAt(v.from));
+                result = result.subtractValue(v.from, self.valueAt(v.from)).addValue(v.to, self.valueAt(v.from));
             } else if ([o isMemberOfClass:[RTTTile class]]){
                 RTTTile* t = (RTTTile*)o;
                 result = result.addValue(t.point, t.value);

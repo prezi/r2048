@@ -19,7 +19,7 @@ RTTMatrix* emptyMatrix();
 - (RTTTile*(^)())getNewRandomTile;
 
 - (RTTMatrix*(^)(const RTTPoint*, int))addValue;
-- (RTTMatrix*(^)(const RTTPoint*, int))substractValue;
+- (RTTMatrix*(^)(const RTTPoint*, int))subtractValue;
 - (RTTMatrix*(^)(NSArray*))applyReduceVectors;
 - (RTTMatrix*(^)())rotateRight;
 - (RTTMatrix*(^)())transpose;

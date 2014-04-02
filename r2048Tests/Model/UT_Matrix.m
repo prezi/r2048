@@ -144,7 +144,7 @@ describe(@"Matrix", ^{
             sut = sut.addValue(p00, 2);
 
             // when
-            sut = sut.substractValue(p00, 2);
+            sut = sut.subtractValue(p00, 2);
 
             // then
             [[sut should] equal:emptyMatrix()];
@@ -155,7 +155,7 @@ describe(@"Matrix", ^{
             sut = sut.addValue(p00, 2).addValue(point(1, 1), 4);
 
             // when
-            sut = sut.substractValue(p00, 2);
+            sut = sut.subtractValue(p00, 2);
 
             // then
             [[sut should] equal:emptyMatrix().addValue(point(1, 1), 4)];
