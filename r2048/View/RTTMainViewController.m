@@ -72,11 +72,15 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     _bestScore = [self savedBestScore];
 
     RACSignal* scoreSignal = RACObserve(matrixViewController, score);
+    RACSignal* bestScoreSignal = RACObserve(self, bestScore);
 
-    RACSignal* bestScoreSignal = [[scoreSignal map:^id(NSNumber* score) {
-        return @(MAX(score.intValue, self.bestScore));
-    }] distinctUntilChanged];
-
+    RAC(self, bestScore) = [[RACSignal
+        combineLatest:@[scoreSignal, bestScoreSignal]
+        reduce:^NSNumber*(NSNumber* score, NSNumber* best) {
+            return @(MAX([score intValue], [best intValue]));
+        }]
+        distinctUntilChanged];
+    
     [bestScoreSignal subscribeNext:^(NSNumber* bestScore) {
         [self saveBestScore:[bestScore intValue]];
     }];
