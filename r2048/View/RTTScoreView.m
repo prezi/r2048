@@ -35,8 +35,8 @@
     return self;
 }
 
-- (void)setPoints:(int)points {
-    int diff = points - _points;
+- (void)setScore:(int)score {
+    int diff = score - _score;
     if (diff > 0 && self.animateChange) {
         UILabel *flyingLabel = [[UILabel alloc] initWithFrame:scoreLabel.frame];
         flyingLabel.textColor = [UIColor fromHex:0x776e65];
@@ -66,8 +66,8 @@
         }];
     }
 
-    _points = points;
-    scoreLabel.text = [NSString stringWithFormat:@"%d", points];
+    _score = score;
+    scoreLabel.text = [NSString stringWithFormat:@"%d", score];
 }
 
 @end

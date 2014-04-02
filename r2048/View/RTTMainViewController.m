@@ -82,8 +82,8 @@ static NSString *const kBestScoreKey = @"kBestScoreKey";
     }];
 
     // UI bindings
-    RAC(scoreView, points) = scoreSignal;
-    RAC(bestView, points) = bestScoreSignal;
+    RAC(scoreView, score) = scoreSignal;
+    RAC(bestView, score) = bestScoreSignal;
 }
 
 - (void)persistBestScore:(int)point {
