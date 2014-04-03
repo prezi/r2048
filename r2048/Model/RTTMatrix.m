@@ -10,7 +10,6 @@
 #import "NSArray+RTTVectors.h"
 #import "RTTPoint.h"
 #import "RTTTile.h"
-#import "RTTVector.h"
 
 static NSDictionary* reduceDic;
 
@@ -70,7 +69,7 @@ RTTMatrix* emptyMatrix() {
 - (int(^)(RTTPoint*))valueAt {
     return ^(RTTPoint* p) {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
-        RTTTile* tile = self.matrix[p.y][p.x];
+        RTTTile* tile = self.matrix[(NSUInteger)p.y][(NSUInteger)p.x];
         return tile.value;
     };
 }

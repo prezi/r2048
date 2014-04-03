@@ -20,7 +20,7 @@ RTTTile* tile(RTTPoint* point, int value) {
 - (instancetype)initWithPoint:(RTTPoint*)point value:(int)value {
     self = [super init];
     if (self) {
-        _point = (RTTPoint* )point;
+        _point = point;
         _value = value;
     }
 

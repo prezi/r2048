@@ -9,16 +9,16 @@
 
 @implementation RTTVector
 
+RTTVector* _vector(RTTPoint* from, RTTPoint* to, BOOL isMerge) {
+    return [RTTVector vectorWithFrom:from to:to isMerge:isMerge];
+}
+
 RTTVector* vector(RTTPoint* from, RTTPoint* to) {
     return _vector(from, to, NO);
 }
 
 RTTVector* mergevector(RTTPoint* from, RTTPoint* to) {
     return _vector(from, to, YES);
-}
-
-RTTVector* _vector(RTTPoint* from, RTTPoint* to, BOOL isMerge) {
-    return [RTTVector vectorWithFrom:from to:to isMerge:isMerge];
 }
 
 + (instancetype)vectorWithFrom:(RTTPoint*)from to:(RTTPoint*)to isMerge:(BOOL)isMerge {
@@ -28,11 +28,10 @@ RTTVector* _vector(RTTPoint* from, RTTPoint* to, BOOL isMerge) {
 - (instancetype)initWithFrom:(RTTPoint*)from to:(RTTPoint*)to isMerge:(BOOL)isMerge {
     self = [super init];
     if (self) {
-        _from = (RTTPoint*)from;
-        _to = (RTTPoint*)to;
+        _from = from;
+        _to = to;
         _isMerge = isMerge;
     }
-
     return self;
 }
 
@@ -56,6 +55,9 @@ RTTVector* _vector(RTTPoint* from, RTTPoint* to, BOOL isMerge) {
 
 - (BOOL)isEqual:(id)object {
     RTTVector* otherVector = (RTTVector*)object;
+    if (self == otherVector) return YES;
+    if (otherVector == nil) return NO;
+
     return [otherVector.from isEqual:self.from] && [otherVector.to isEqual:self.to];
 }
 
