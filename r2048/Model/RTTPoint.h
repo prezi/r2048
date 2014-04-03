@@ -3,7 +3,7 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
-@interface RTTPoint : NSObject
+@interface RTTPoint : NSObject<NSCopying, NSMutableCopying>
 
 @property (nonatomic, readonly) short x;
 @property (nonatomic, readonly) short y;

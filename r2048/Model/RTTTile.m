@@ -27,18 +27,6 @@ RTTTile* tile(RTTPoint* point, int value) {
     return self;
 }
 
-- (RTTTile* (^)())flip {
-    return ^{
-        return tile(self.point, self.value == 0 ? 2 : 0);
-    };
-}
-
-- (RTTPoint* (^)())toPoint {
-    return ^{
-        return self.point;
-    };
-}
-
 #pragma mark - ReduceCommand protocol
 
 - (RTTMatrix*(^)(RTTMatrix*))apply {

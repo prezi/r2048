@@ -13,7 +13,5 @@
 @property (nonatomic, readonly) int value;
 
 RTTTile* tile(RTTPoint* point, int value);
-- (RTTTile* (^)())flip;
-- (RTTPoint* (^)())toPoint;
 
 @end
