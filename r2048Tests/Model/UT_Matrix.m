@@ -255,7 +255,7 @@ describe(@"Matrix", ^{
             it(@"empty", ^{
                 // given
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[sut should] equal:reduced];
@@ -266,7 +266,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[sut should] equal:reduced];
@@ -277,7 +277,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p10, 2);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 2)];
@@ -288,7 +288,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p10, 4);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[sut should] equal:reduced];
@@ -299,7 +299,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p20, 4);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 2).addValue(p10, 4)];
@@ -310,7 +310,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p10, 2);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 4)];
@@ -321,7 +321,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p10, 2).addValue(p20, 4);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 4).addValue(p10, 4)];
@@ -332,7 +332,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p10, 2).addValue(p30, 4);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 4).addValue(p10, 4)];
@@ -343,7 +343,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p10, 2).addValue(p20, 4).addValue(p30, 4);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 4).addValue(p10, 8)];
@@ -354,7 +354,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p10, 2).addValue(p20, 2).addValue(p30, 2);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 4).addValue(p10, 4)];
@@ -365,7 +365,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p10, 2).addValue(point(1, 1), 4).addValue(point(3, 1), 4);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionLeft)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 4).addValue(p01, 8)];
@@ -380,7 +380,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p01, 2).addValue(p10, 4).addValue(point(1, 3), 4);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionUp)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionUp)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p00, 4).addValue(p10, 8)];
@@ -395,7 +395,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(p10, 2).addValue(point(1, 1), 4).addValue(point(3, 1), 4);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionRight)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionRight)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(p30, 4).addValue(point(3, 1), 8)];
@@ -410,7 +410,7 @@ describe(@"Matrix", ^{
                 sut = sut.addValue(p00, 2).addValue(point(0, 3), 2).addValue(point(1, 1), 4).addValue(point(1, 2), 8);
 
                 // when
-                reduced = sut.applyReduceVectors(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionDown)));
+                reduced = sut.applyReduceCommands(sut.mapDirectionToReduceVectors(@(UISwipeGestureRecognizerDirectionDown)));
 
                 // then
                 [[reduced should] equal:emptyMatrix().addValue(point(0, 3), 4).addValue(point(1, 3), 8).addValue(point(1, 2), 4)];

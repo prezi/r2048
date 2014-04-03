@@ -104,7 +104,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     RACSignal* createInitialTilesSignal = [self.resetGameCommand.executionSignals
         map:^id(id value) {
             RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
-            RTTTile* secondRandomTile = self.matrix.applyReduceVectors(@[firstRandomTile]).getNewRandomTile();
+            RTTTile* secondRandomTile = self.matrix.applyReduceCommands(@[firstRandomTile]).getNewRandomTile();
             return @[firstRandomTile, secondRandomTile];
         }];
 
@@ -136,7 +136,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     RACSignal* vectorsWithRandomTileSignal = [vectorSignal
         map:^id(NSArray* vectors) {
             // after every swipe add one random tile the signal stream
-            RTTTile* tile = self.matrix.applyReduceVectors(vectors).getNewRandomTile();
+            RTTTile* tile = self.matrix.applyReduceCommands(vectors).getNewRandomTile();
             return [vectors arrayByAddingObject:tile];
         }];
 
@@ -151,7 +151,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
         NSArray* creates = vectors.filterCreates();
         NSArray* merges = moves.filterMergePoints();
 
-        RTTMatrix* reducedMatrix = self.matrix.applyReduceVectors(vectors);
+        RTTMatrix* reducedMatrix = self.matrix.applyReduceCommands(vectors);
 
         // moves
         NSArray* tileViewsToMove = [[[moves.rac_sequence
@@ -238,7 +238,7 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     // apply the changes to the matrix
     RACSignal* reducedMatrixSignal = [tilesAndVectorsSignal
         map:^id(NSArray* vectors) {
-            return self.matrix.applyReduceVectors(vectors);
+            return self.matrix.applyReduceCommands(vectors);
         }];
 
     // assign the new matrix to itself

@@ -186,17 +186,11 @@ RTTMatrix* emptyMatrix() {
     };
 }
 
-- (RTTMatrix*(^)(NSArray*))applyReduceVectors {
+- (RTTMatrix*(^)(NSArray*))applyReduceCommands {
     return ^(NSArray* reduceVectors) {
         RTTMatrix*result = self;
-        for (NSObject* o in reduceVectors) {
-            if ([o isMemberOfClass:[RTTVector class]]) {
-                RTTVector* v = (RTTVector*)o;
-                result = result.subtractValue(v.from, self.valueAt(v.from)).addValue(v.to, self.valueAt(v.from));
-            } else if ([o isMemberOfClass:[RTTTile class]]){
-                RTTTile* t = (RTTTile*)o;
-                result = result.addValue(t.point, t.value);
-            }
+        for (NSObject<RTTReduceCommand>* reduceCommand in reduceVectors) {
+            result = reduceCommand.apply(result);
         }
         return result;
     };

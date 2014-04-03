@@ -3,9 +3,11 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
+#import "RTTReduceCommand.h"
+
 @class RTTPoint;
 
-@interface RTTVector : NSObject
+@interface RTTVector : NSObject<RTTReduceCommand>
 
 @property (nonatomic, readonly) RTTPoint* from;
 @property (nonatomic, readonly) RTTPoint* to;

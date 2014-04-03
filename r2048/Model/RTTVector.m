@@ -3,8 +3,9 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
-#import "RTTVector.h"
+#import "RTTMatrix.h"
 #import "RTTPoint.h"
+#import "RTTVector.h"
 
 @implementation RTTVector
 
@@ -42,6 +43,14 @@ RTTVector* _vector(RTTPoint* from, RTTPoint* to, BOOL isMerge) {
 - (RTTVector*(^)())rotateRight {
     return ^{
         return _vector(self.from.reverse().invert(), self.to.reverse().invert(), self.isMerge);
+    };
+}
+
+#pragma mark - ReduceCommand protocol
+
+- (RTTMatrix*(^)(RTTMatrix*))apply {
+    return ^(RTTMatrix* sourceMatrix) {
+        return sourceMatrix.subtractValue(self.from, sourceMatrix.valueAt(self.from)).addValue(self.to, sourceMatrix.valueAt(self.from));
     };
 }
 

@@ -3,8 +3,9 @@
 // Copyright (c) 2014 Viktor Belenyesi. All rights reserved.
 //
 
-#import "RTTTile.h"
+#import "RTTMatrix.h"
 #import "RTTPoint.h"
+#import "RTTTile.h"
 
 @implementation RTTTile
 
@@ -35,6 +36,14 @@ RTTTile* tile(RTTPoint* point, int value) {
 - (RTTPoint* (^)())toPoint {
     return ^{
         return self.point;
+    };
+}
+
+#pragma mark - ReduceCommand protocol
+
+- (RTTMatrix*(^)(RTTMatrix*))apply {
+    return ^(RTTMatrix* sourceMatrix) {
+        return sourceMatrix.addValue(self.point, self.value);
     };
 }
 

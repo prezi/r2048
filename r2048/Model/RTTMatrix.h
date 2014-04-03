@@ -20,7 +20,7 @@ RTTMatrix* emptyMatrix();
 
 - (RTTMatrix*(^)(RTTPoint*, int))addValue;
 - (RTTMatrix*(^)(RTTPoint*, int))subtractValue;
-- (RTTMatrix*(^)(NSArray*))applyReduceVectors;
+- (RTTMatrix*(^)(NSArray*))applyReduceCommands;
 - (RTTMatrix*(^)())rotateRight;
 - (RTTMatrix*(^)())transpose;
 - (RTTMatrix*(^)())reverseRowWise;

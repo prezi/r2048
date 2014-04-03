@@ -4,6 +4,7 @@
 //
 
 #import "RTTPoint.h"
+#import "RTTMatrix.h"
 
 @implementation RTTPoint
 

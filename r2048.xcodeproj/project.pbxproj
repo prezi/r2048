@@ -88,6 +88,7 @@
 		ADEAFA9BFFC6E954202A3DEF /* UIView+RTTClear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RTTClear.m"; sourceTree = "<group>"; };
 		ADEAFC01BD9E295C25FFC495 /* NSArray+RTTVectors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+RTTVectors.m"; sourceTree = "<group>"; };
 		ADEAFC0FD0E2E86E8AC118AA /* RTTTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTTile.h; sourceTree = "<group>"; };
+		ADEAFC5E99B31D86862983D6 /* RTTReduceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTReduceCommand.h; sourceTree = "<group>"; };
 		ADEAFC9FA65D256537CB3F8C /* RTTTileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTTileView.m; sourceTree = "<group>"; };
 		ADEAFE33368A2955FFC338A8 /* RTTMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTMainViewController.h; sourceTree = "<group>"; };
 		ADEAFEBDBC7D9EACD1BC98E9 /* NSArray+RTTTiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+RTTTiles.h"; sourceTree = "<group>"; };
@@ -132,6 +133,7 @@
 				ADEAF16998777FD095632EA2 /* RTTVector.h */,
 				ADEAF3101B09A0D11D7CB914 /* RTTTile.m */,
 				ADEAFC0FD0E2E86E8AC118AA /* RTTTile.h */,
+				ADEAFC5E99B31D86862983D6 /* RTTReduceCommand.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
