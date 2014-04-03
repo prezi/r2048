@@ -7,7 +7,5 @@
 
 - (NSArray *(^)())removeZeroTiles;
 - (NSArray *(^)())mapTileArrayToReduceVectors;
-- (NSArray *(^)())flipTiles;
-- (NSArray *(^)())convertTilesToPoints;
 
 @end

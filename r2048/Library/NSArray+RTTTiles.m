@@ -48,21 +48,4 @@
     };
 }
 
-- (NSArray *(^)())flipTiles {
-    return ^{
-        return [[self.rac_sequence map:^id(RTTTile* tile) {
-            return tile.flip();
-        }] array];;
-    };
-}
-
-- (NSArray *(^)())convertTilesToPoints {
-    return ^{
-        return [[self.rac_sequence map:^id(RTTTile* tile) {
-            return tile.toPoint();
-        }] array];;
-    };
-}
-
-
 @end

@@ -51,6 +51,21 @@ RTTPoint* point(short x, short y) {
     return (otherPoint.x == self.x) && (otherPoint.y == self.y);
 }
 
+- (NSUInteger)hash {
+    return (NSUInteger)(self.x + kMatrixSize * self.y);
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    RTTPoint* result = [[RTTPoint allocWithZone:zone] init];
+    result->_x = self.x;
+    result->_y = self.y;
+    return result;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    return [self copyWithZone:zone];
+}
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"(%d, %d)", self.x, self.y];
 }

@@ -7,7 +7,6 @@
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import "RTTMatrixViewController.h"
-#import "RTTPoint.h"
 #import "RTTScoreView.h"
 #import "UIColor+RTTFromHex.h"
 
@@ -75,10 +74,10 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     RACSignal* bestScoreSignal = RACObserve(self, bestScore);
 
     RAC(self, bestScore) = [[RACSignal
-        combineLatest:@[scoreSignal, bestScoreSignal]
-        reduce:^NSNumber*(NSNumber* score, NSNumber* best) {
-            return @(MAX([score intValue], [best intValue]));
-        }]
+            combineLatest:@[scoreSignal, bestScoreSignal]
+                   reduce:(id (^)()) ^NSNumber*(NSNumber* score, NSNumber* best) {
+                                          return @(MAX([score intValue], [best intValue]));
+                                      }]
         distinctUntilChanged];
     
     [bestScoreSignal subscribeNext:^(NSNumber* bestScore) {

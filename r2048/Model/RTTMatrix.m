@@ -14,7 +14,7 @@
 static NSDictionary* reduceDic;
 
 @interface RTTMatrix ()
-@property (nonatomic, readonly) NSArray* matrix;
+@property (nonatomic, readonly) NSDictionary* matrix;
 @end
 
 @implementation RTTMatrix
@@ -39,24 +39,14 @@ static NSDictionary* reduceDic;
 }
 
 + (instancetype)matrix {
-    NSArray* result = [NSArray new];
-
-    for (short y = 0; y < kMatrixSize; y++) {
-        NSArray* row = [NSArray new];
-        for (short x = 0; x < kMatrixSize; x++) {
-            row = [row arrayByAddingObject:tile(point(x, y), 0)];
-        }
-        result = [result arrayByAddingObject:row];
-    }
-
-    return [[RTTMatrix alloc] initWith2DArray:result];
+    return [[RTTMatrix alloc] initWithDictionary:[NSDictionary new]];
 }
 
-- (instancetype)initWith2DArray:(NSArray*)matrix {
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary {
     self = [super init];
     if (self) {
-       _matrix = [matrix copy];
-    };
+       _matrix = dictionary;
+    }
     return self;
 }
 
@@ -69,8 +59,11 @@ RTTMatrix* emptyMatrix() {
 - (int(^)(RTTPoint*))valueAt {
     return ^(RTTPoint* p) {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
-        RTTTile* tile = self.matrix[(NSUInteger)p.y][(NSUInteger)p.x];
-        return tile.value;
+        if ([self.matrix.allKeys containsObject:p]) {
+            return [self.matrix[p] intValue];
+        } else {
+            return 0;
+        }
     };
 }
 
@@ -92,9 +85,20 @@ RTTMatrix* emptyMatrix() {
 
 - (NSArray*(^)())getReduceVectors {
     return ^{
-        return [[[self.matrix.rac_sequence map:^id(NSArray* row) {
+        return [[[self.getRowArray().rac_sequence map:^id(NSArray* row) {
             return row.removeZeroTiles().mapTileArrayToReduceVectors().rac_sequence;
         }] flatten] array];
+    };
+}
+
+- (NSArray*(^)())getRowArray {
+    return ^{
+        NSArray* tiles = self.getTiles();
+        NSArray* result = [NSArray new];
+        for (short y = 0; y < kMatrixSize; y++) {
+            result = [result arrayByAddingObject:[tiles subarrayWithRange:NSMakeRange((NSUInteger)(y * kMatrixSize), kMatrixSize)]];
+        }
+        return result;
     };
 }
 
@@ -107,17 +111,24 @@ RTTMatrix* emptyMatrix() {
 
 - (NSArray*(^)())getEmptyPositions {
     return ^{
-        return [[[self.matrix.rac_sequence map:^id(NSArray* row) {
-            return row.flipTiles().removeZeroTiles().convertTilesToPoints().rac_sequence;
-        }] flatten] array];
+        return [[[self.getTiles().rac_sequence filter:^BOOL(RTTTile* tile) {
+            return tile.value == 0;
+        }] map:^id(RTTTile* tile) {
+            return tile.point;
+        }] array];
     };
 }
 
 - (NSArray*(^)())getTiles {
     return ^{
-        return [[[self.matrix.rac_sequence map:^id(NSArray* row) {
-            return row.rac_sequence;
-        }] flatten] array];
+        NSArray* result = [NSArray new];
+        for (short y = 0; y < kMatrixSize; y++) {
+            for (short x = 0; x < kMatrixSize; x++) {
+                RTTPoint* p = point(x, y);
+                result = [result arrayByAddingObject:tile(p, self.valueAt(p))];
+            }
+        }
+        return result;
     };
 }
 
@@ -164,18 +175,14 @@ RTTMatrix* emptyMatrix() {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
         RTTAssert(value % 2 == 0);
 
-        NSUInteger y = (NSUInteger) p.y;
-
-        NSMutableArray* mutableCopy = [self.matrix mutableCopy];
-        NSMutableArray* mutableRow = [mutableCopy[y] mutableCopy];
         int newValue = value + self.valueAt(p);
 
         // Check if power of two
         RTTAssert(newValue != 1 && (newValue & (newValue - 1)) == 0);
-
-        mutableRow[(NSUInteger)p.x] = tile(p, newValue);
-        mutableCopy[y] = [mutableRow copy];
-        return [[RTTMatrix alloc] initWith2DArray:mutableCopy];
+        NSMutableDictionary* copyDictionary = [self.matrix mutableCopy];
+        [copyDictionary setObject:@(newValue) forKey:p];
+        RTTMatrix *matrix = [[RTTMatrix alloc] initWithDictionary:[copyDictionary copy]];
+        return matrix;
     };
 }
 
