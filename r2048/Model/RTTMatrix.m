@@ -59,11 +59,8 @@ RTTMatrix* emptyMatrix() {
 - (int(^)(RTTPoint*))valueAt {
     return ^(RTTPoint* p) {
         RTTAssert(p.x < kMatrixSize && p.y < kMatrixSize && p.x >= 0 && p.y >= 0);
-        if ([self.matrix.allKeys containsObject:p]) {
-            return [self.matrix[p] intValue];
-        } else {
-            return 0;
-        }
+        NSNumber* value = self.matrix[p];
+        return value ? [value intValue] : 0;
     };
 }
 
