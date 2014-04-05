@@ -80,9 +80,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
         distinctUntilChanged]
         startWith:@([self savedBestScore])];
 
-    [bestScoreSignal subscribeNext:^(NSNumber* bestScore) {
-        [self saveBestScore:[bestScore intValue]];
-    }];
+    [self rac_liftSelector:@selector(saveBestScore:) withSignals:bestScoreSignal, nil];
 
     // UI bindings
     RAC(scoreView, score) = scoreSignal;
