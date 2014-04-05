@@ -29,7 +29,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     RTTAssert(matrixViewController.resetGameCommand);
 
     float buttonY = CGRectGetMinY(matrixViewController.view.frame) - kButtonHeight - 20.0f;
-    
+
     UILabel* titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 20.0f, self.view.bounds.size.width, 80.0f)];
     titleLabel.textColor = [UIColor fromHex:0x776e65];
     titleLabel.font = [UIFont boldSystemFontOfSize:40.0f];
@@ -37,7 +37,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     titleLabel.baselineAdjustment = UIBaselineAdjustmentAlignCenters;
     titleLabel.text = @"Reactive2048";
     [self.view addSubview:titleLabel];
-    
+
     RTTScoreView* scoreView = [[RTTScoreView alloc] initWithFrame:CGRectMake(CGRectGetMinX(matrixViewController.view.frame),
                                                                              buttonY,
                                                                              kButtonWidth,
@@ -45,7 +45,7 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
                                                          andTitle:@"SCORE"];
     scoreView.animateChange = YES;
     [self.view addSubview:scoreView];
-    
+
     RTTScoreView* bestView = [[RTTScoreView alloc] initWithFrame:CGRectMake(CGRectGetMidX(matrixViewController.view.frame) - kButtonWidth * 0.5f,
                                                                             buttonY,
                                                                             kButtonWidth,
@@ -68,18 +68,18 @@ static NSString *const kBestScoreKey = @"RTTBestScore";
     [self.view addSubview:resetGameButton];
 
     // Scores
-    _bestScore = [self savedBestScore];
 
     RACSignal* scoreSignal = RACObserve(matrixViewController, score);
     RACSignal* bestScoreSignal = RACObserve(self, bestScore);
 
-    RAC(self, bestScore) = [[RACSignal
+    RAC(self, bestScore) = [[[RACSignal
             combineLatest:@[scoreSignal, bestScoreSignal]
                    reduce:(id (^)()) ^NSNumber*(NSNumber* score, NSNumber* best) {
                                           return @(MAX([score intValue], [best intValue]));
                                       }]
-        distinctUntilChanged];
-    
+        distinctUntilChanged]
+        startWith:@([self savedBestScore])];
+
     [bestScoreSignal subscribeNext:^(NSNumber* bestScore) {
         [self saveBestScore:[bestScore intValue]];
     }];
