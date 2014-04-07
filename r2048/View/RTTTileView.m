@@ -71,30 +71,10 @@ static NSDictionary* fgColorDic;
     return self;
 }
 
-#pragma mark - Copy, compare, equal
+#pragma mark - Copy, equal
 
 - (NSComparisonResult)compare:(RTTTileView*)otherView {
     return COMPARE(self.value, otherView.value);
-}
-
-- (BOOL)isEqual:(id)object {
-    RTTTileView* otherTileView = (RTTTileView*)object;
-    if (self == otherTileView) return YES;
-    if (otherTileView == nil) return NO;
-    
-    return [self.point isEqual:otherTileView.point] && self.value == otherTileView.value;
-}
-
-- (NSUInteger)hash {
-    return self.point.hash + kMatrixSize * kMatrixSize * self.value;
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-    return self;
-}
-
-- (id)mutableCopyWithZone:(NSZone *)zone {
-    return self;
 }
 
 - (NSString *)description {
