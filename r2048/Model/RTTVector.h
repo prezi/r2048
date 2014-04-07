@@ -7,7 +7,7 @@
 
 @class RTTPoint;
 
-@interface RTTVector : NSObject<RTTReduceCommand>
+@interface RTTVector : NSObject<RTTReduceCommand, NSCopying>
 
 @property (nonatomic, readonly) RTTPoint* from;
 @property (nonatomic, readonly) RTTPoint* to;

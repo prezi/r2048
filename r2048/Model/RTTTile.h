@@ -7,7 +7,7 @@
 
 @class RTTPoint;
 
-@interface RTTTile : NSObject<RTTReduceCommand>
+@interface RTTTile : NSObject<RTTReduceCommand, NSCopying>
 
 @property (nonatomic, readonly) RTTPoint* point;
 @property (nonatomic, readonly) int value;

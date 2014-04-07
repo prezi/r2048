@@ -61,10 +61,6 @@ RTTPoint* point(short x, short y) {
     return self;
 }
 
-- (id)mutableCopyWithZone:(NSZone *)zone {
-    return self;
-}
-
 - (NSString *)description {
     return [NSString stringWithFormat:@"(%d, %d)", self.x, self.y];
 }

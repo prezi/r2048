@@ -237,18 +237,6 @@ RTTMatrix* emptyMatrix() {
     return YES;
 }
 
-- (NSUInteger)hash {
-    return self.matrix.hash;
-}
-
-- (id)copyWithZone:(NSZone *)zone {
-    return self;
-}
-
-- (id)mutableCopyWithZone:(NSZone *)zone {
-    return self;
-}
-
 - (NSString*)description {
     NSMutableString* result = [NSMutableString new];
     [result appendString:@"\n"];

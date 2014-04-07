@@ -53,10 +53,6 @@ RTTTile* tile(RTTPoint* point, int value) {
     return self;
 }
 
-- (id)mutableCopyWithZone:(NSZone *)zone {
-    return self;
-}
-
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@ = %d", self.point, self.value];
 }

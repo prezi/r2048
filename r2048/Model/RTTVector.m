@@ -71,10 +71,6 @@ RTTVector* mergevector(RTTPoint* from, RTTPoint* to) {
     return self;
 }
 
-- (id)mutableCopyWithZone:(NSZone *)zone {
-    return self;
-}
-
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@ -> %@>[%@]", self.from, self.to, self.isMerge ? @"YES" : @"NO"];
 }
