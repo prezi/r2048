@@ -64,22 +64,6 @@ RTTMatrix* emptyMatrix() {
     };
 }
 
-- (BOOL)isEqual:(id)object {
-    RTTMatrix* otherMatrix = (RTTMatrix*)object;
-    if (self == otherMatrix) return YES;
-    if (otherMatrix == nil) return NO;
-
-    for (short y = 0; y < kMatrixSize; y++) {
-        for (short x = 0; x < kMatrixSize; x++) {
-            RTTPoint* p = point(x, y);
-            if (self.valueAt(p) != otherMatrix.valueAt(p)) {
-                return NO;
-            }
-        }
-    }
-    return YES;
-}
-
 - (NSArray*(^)())getReduceVectors {
     return ^{
         return [[[self.getRowArray().rac_sequence map:^id(NSArray* row) {
@@ -235,7 +219,35 @@ RTTMatrix* emptyMatrix() {
     };
 }
 
-#pragma mark - Debug
+#pragma mark - Copy, equal
+
+- (BOOL)isEqual:(id)object {
+    RTTMatrix* otherMatrix = (RTTMatrix*)object;
+    if (self == otherMatrix) return YES;
+    if (otherMatrix == nil) return NO;
+    
+    for (short y = 0; y < kMatrixSize; y++) {
+        for (short x = 0; x < kMatrixSize; x++) {
+            RTTPoint* p = point(x, y);
+            if (self.valueAt(p) != otherMatrix.valueAt(p)) {
+                return NO;
+            }
+        }
+    }
+    return YES;
+}
+
+- (NSUInteger)hash {
+    return self.matrix.hash;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    return self;
+}
 
 - (NSString*)description {
     NSMutableString* result = [NSMutableString new];

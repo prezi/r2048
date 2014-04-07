@@ -53,12 +53,26 @@ RTTVector* mergevector(RTTPoint* from, RTTPoint* to) {
     };
 }
 
+#pragma mark - Copy, equal
+
 - (BOOL)isEqual:(id)object {
     RTTVector* otherVector = (RTTVector*)object;
     if (self == otherVector) return YES;
     if (otherVector == nil) return NO;
-
+    
     return [otherVector.from isEqual:self.from] && [otherVector.to isEqual:self.to];
+}
+
+- (NSUInteger)hash {
+    return self.from.hash + self.to.hash * kMatrixSize + (self.isMerge ? 1 : 0) * kMatrixSize * kMatrixSize;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    return self;
 }
 
 - (NSString *)description {
