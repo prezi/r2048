@@ -15,6 +15,16 @@
 #import "UIColor+RTTFromHex.h"
 #import "UIView+RTTClear.h"
 
+@implementation RACSignal (RTT)
+
+- (RACSignal*)named:(NSString*)aName {
+    self.name = aName;
+    return self;
+}
+
+@end
+
+
 @interface RTTMatrixViewController ()
 @property (nonatomic) RTTMatrix* matrix;
 @property (nonatomic, readwrite) int score;
@@ -92,22 +102,53 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
         [gameView clear];
 
         gameOverView.alpha = 0.0f;
-        self.matrix = emptyMatrix();
+        self.matrix = nil;
+//        self.matrix = emptyMatrix();
         self.score = 0;
 
-        return [RACSignal empty];
+        RACSignal* resetSignal = [RACSignal empty];
+        resetSignal.name = @"reset";
+        return resetSignal;
     }];
 
     retryButton.rac_command = _resetGameCommand;
 
+    RACSignal* matrixSignal = [[[RACObserve(self, matrix)
+        ignore:nil] named:@"matrix"] logNext];
+    
     // on reset button tap add two random tiles to the signal stream
-    RACSignal* createInitialTilesSignal = [self.resetGameCommand.executionSignals
-        map:^id(id value) {
-            RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
-            RTTTile* secondRandomTile = self.matrix.applyReduceCommands(@[firstRandomTile]).getNewRandomTile();
+//    [self.resetGameCommand.executionSignals
+//        subscribeNext:^(id x) {
+//            RTTTile* firstRandomTile = self.matrix.getNewRandomTile();
+//            RTTTile* secondRandomTile = self.matrix.applyReduceCommands(@[firstRandomTile]).getNewRandomTile();
+//            self.matrix = self.matrix.applyReduceCommands(@[firstRandomTile, secondRandomTile]);
+//        }];
+//
+    [self.resetGameCommand.executionSignals subscribeNext:^(id x) {
+        NSLog(@"executionsignals %@", x);
+    }];
+    
+    [self.resetGameCommand.executing subscribeNext:^(id x) {
+        NSLog(@"executing %@", x);
+    }];
+    
+    RACSignal* initialMatrixSignal = [[[[[self.resetGameCommand.executionSignals logNext]
+        filter:^BOOL(id value) {
+            return (self.matrix == nil);
+        }]
+        mapReplace:emptyMatrix()]
+        named:@"initialMatrix"] logNext];
+    
+    RACSignal* initialTilesSignal = [[[initialMatrixSignal
+        map:^(RTTMatrix* matrix) {
+            RTTTile* firstRandomTile = matrix.getNewRandomTile();
+            RTTTile* secondRandomTile = matrix.applyReduceCommands(@[firstRandomTile]).getNewRandomTile();
             return @[firstRandomTile, secondRandomTile];
-        }];
+        }] named:@"initialTiles"] logNext];
 
+    RACSignal* anyMatrixSignal = [[[RACSignal merge:@[initialMatrixSignal, matrixSignal]]
+                                  named:@"anyMatrix"] logNext];
+    
     // add gesture recognizers
     NSArray* signalArray = [NSArray new];
     for (short i = 0; i < 4; i++) {
@@ -122,27 +163,175 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
     }
 
     // merge 4 directional gesturerecognizers into one stream
-    RACSignal* swipeSignal = [RACSignal merge:signalArray];
+    RACSignal* swipeSignal = [[[RACSignal merge:signalArray] named:@"swipes"] logNext];
 
-    RACSignal* vectorSignal = [[swipeSignal
-        map:^id(NSNumber* direction) {
-            // map the directions to animation vectors
-            return self.matrix.mapDirectionToReduceVectors(direction);
+    // map the directions to animation vectors
+    RACSignal* vectorsSignal = [[[[RACSignal
+        combineLatest:@[swipeSignal, anyMatrixSignal]
+        reduce:^id(NSNumber* direction, RTTMatrix* matrix) {
+            return matrix.mapDirectionToReduceVectors(direction);
         }]
         filter:^BOOL(NSArray* vectors) {
             return [vectors count] > 0;
+        }]
+        named:@"vectors"] logNext];
+
+    // apply the changes to the matrix
+    RACSignal* reducedMatrixSignal = [[[RACSignal
+        combineLatest:@[vectorsSignal,
+                        anyMatrixSignal]
+        reduce:^id(NSArray* vectors, RTTMatrix* matrix) {
+            return matrix.applyReduceCommands(vectors);
+        }] named:@"reducedMatrix"] logNext];
+
+    RACSignal* tileViewsToMoveSignal = [[[[[vectorsSignal
+        map:^NSArray*(NSArray* vectors) {
+            NSArray* tileViewsToMove = [[[vectors.rac_sequence
+                map:^id(RTTVector* v) {
+                    return v.from;
+                }]
+                map:firstTileViewsForPoint]
+                array];
+            return tileViewsToMove;
+        }]
+        doNext:^(NSArray* tileViews) {
+            // remove old tileviewss
+            for (RTTTileView* tileView in tileViews) {
+                [tileView removeFromSuperview];
+            }
+        }]
+        zipWith:vectorsSignal]
+        map:^NSArray*(RACTuple* tuple) {
+            // create replace tiles, copy frame and change point, because tileviews are immutables
+            NSArray* views = tuple.first;
+            NSArray* vectors = tuple.second;
+            
+            NSArray* movedTileViews = [[[views.rac_sequence
+                zipWith:vectors.rac_sequence]
+                map:^id(RACTuple* tuple) {
+                    RTTTileView* tileView = tuple.first;
+                    RTTVector* vector = tuple.second;
+                    
+                    RTTTileView* replaceTileView = mapTileToTileView(tile(vector.to, tileView.value));
+                    replaceTileView.frame = tileView.frame;
+                    return replaceTileView;
+                }]
+                array];
+            return movedTileViews;
+        }]
+        doNext:^(NSArray* tileViews) {
+            for (RTTTileView* tileView in tileViews) {
+                [gameView insertSubview:tileView atIndex:0];
+            }
+        }];
+    
+    
+    RACSignal* mergePointsSignal = [vectorsSignal
+        map:^NSArray*(NSArray* vectors) {
+            NSArray* mergePoints = [[[vectors.rac_sequence
+                filter:^BOOL(RTTVector* v) {
+                    return [v isMerge];
+                }]
+                map:^id(RTTVector* v) {
+                    return v.to;
+                }]
+                array];
+            
+            return [mergePoints sortedArrayUsingSelector:@selector(compare:)];
         }];
 
-    RACSignal* vectorsWithRandomTileSignal = [vectorSignal
-        map:^id(NSArray* vectors) {
-            // after every swipe add one random tile the signal stream
-            RTTTile* tile = self.matrix.applyReduceCommands(vectors).getNewRandomTile();
-            return [vectors arrayByAddingObject:tile];
+    
+    // collect tiles to remove after merge
+    RACSignal* tileViewsToDiscardSignal = [mergePointsSignal
+        map:^NSArray*(NSArray* mergePoints) {
+            NSArray* tileViewsToDiscard = [[mergePoints.rac_sequence
+                map:mapTileViewsForPoint]
+                array];
+            return tileViewsToDiscard;
+        }];
+    
+    // get merged tiles
+    RACSignal* tileViewsToMergeSignal = [RACSignal
+        combineLatest:@[mergePointsSignal, reducedMatrixSignal]
+        reduce:^id(NSArray* mergePoints, RTTMatrix* reducedMatrix) {
+            NSArray* tileViewsToMerge = [[[mergePoints.rac_sequence
+                map:^id(RTTPoint* point) {
+                    return tile(point, reducedMatrix.valueAt(point));
+                }]
+                map:mapTileToTileView]
+                array];
+            return tileViewsToMerge;
+        }];
+    
+    
+    // after every swipe add one random tile to the signal stream
+    RACSignal* randomTileSignal = [[reducedMatrixSignal
+        map:^id(RTTMatrix* reducedMatrix) {
+            return @[reducedMatrix.getNewRandomTile()];
+        }]
+        named:@"randomTile"];
+
+    RACSignal* tilesToCreateSignal = [[[RACSignal
+        merge:@[initialTilesSignal, randomTileSignal]]
+        named:@"tilesToCreate"] logNext];
+    
+    RACSignal* updatedMatrixSignal = [[[RACSignal
+        combineLatest:@[reducedMatrixSignal, tilesToCreateSignal]
+        reduce:^RTTMatrix*(RTTMatrix* matrix, NSArray* tiles) {
+            return matrix.applyReduceCommands(tiles);
+        }]
+        named:@"updatedMatrix"] logNext];
+    
+    RACSignal* tileViewsToCreateSignal = [tilesToCreateSignal
+//        doNext:^(NSArray* tiles) {
+//            self.matrix = self.matrix.applyReduceCommands(tiles);
+//        }]
+        map:^NSArray*(NSArray* tiles) {
+            return [[tiles.rac_sequence map:mapTileToTileView] array];
+        }];
+    
+    [tileViewsToCreateSignal
+        subscribeNext:^(NSArray* tileViewsToCreate) {
+            // create animations
+            for (RTTTileView* tileView in tileViewsToCreate) {
+                tileView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+                tileView.alpha = 0.0f;
+                [gameView addSubview:tileView];
+            }
+            [UIView animateWithDuration:kScaleAnimDuration
+                                  delay:kSlideAnimDuration
+                                options:UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 for (RTTTileView* tileView in tileViewsToCreate) {
+                                     tileView.alpha = 1.0f;
+                                     tileView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+                                 }
+                             }
+                             completion:nil];
+        }];
+    
+    [[RACSignal
+        combineLatest:@[tileViewsToCreateSignal,
+                        tileViewsToMoveSignal,
+                        tileViewsToMergeSignal,
+                        tileViewsToDiscardSignal]]
+        subscribeNext:^(RACTuple* tuple) {
+            NSArray* tvCreate = tuple.first;
+            NSArray* tvMove = tuple.second;
+            NSArray* tvMerge = tuple.third;
+            NSArray* tvDiscard = tuple.fourth;
+            
+            [self animateTileViewsToCreate:tvCreate
+                                      move:tvMove
+                                     merge:tvMerge
+                                   discard:tvDiscard
+                                    inView:gameView];
         }];
 
+    
+/*
     // do the animations either if event arrives from swipe or from reset button
-    RACSignal* tilesAndVectorsSignal = [RACSignal
-        merge:@[vectorsWithRandomTileSignal, createInitialTilesSignal]];
+    vectorSignal = [RACSignal merge:@[vectorSignal, initialTilesSignal]];
 
     // animations as side effects
     tilesAndVectorsSignal = [tilesAndVectorsSignal doNext:^(NSArray* vectors) {
@@ -154,53 +343,53 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
         RTTMatrix* reducedMatrix = self.matrix.applyReduceCommands(vectors);
 
         // moves
-        NSArray* tileViewsToMove = [[[moves.rac_sequence
-            map:^id(RTTVector* vector) {
-                return vector.from;
-            }]
-            map:firstTileViewsForPoint]
-            array];
+//        NSArray* tileViewsToMove = [[[moves.rac_sequence
+//            map:^id(RTTVector* vector) {
+//                return vector.from;
+//            }]
+//            map:firstTileViewsForPoint]
+//            array];
+//
+//        // remove old tileviewss
+//        for (RTTTileView* tileView in tileViewsToMove) {
+//            [tileView removeFromSuperview];
+//        }
+//
+//        // create replace tiles, copy frame and change point, because tileviews are immutables
+//        tileViewsToMove = [[[moves.rac_sequence
+//            zipWith:tileViewsToMove.rac_sequence]
+//            map:^id(RACTuple* tuple) {
+//                RTTVector* vector = tuple.first;
+//                RTTTileView* tileView = tuple.second;
+//
+//                RTTTileView* replaceTileView = mapTileToTileView(tile(vector.to, tileView.value));
+//                replaceTileView.frame = tileView.frame;
+//                return replaceTileView;
+//            }]
+//            array];
+//
+//        for (RTTTileView* tileView in tileViewsToMove) {
+//            [gameView insertSubview:tileView atIndex:0];
+//        }
 
-        // remove old tileviewss
-        for (RTTTileView* tileView in tileViewsToMove) {
-            [tileView removeFromSuperview];
-        }
+//        // collect tiles to remove after merge
+//        NSArray* tileViewsToDiscard = [[[merges.rac_sequence
+//            map:mapTileViewsForPoint]
+//            flatten]
+//            array];
 
-        // create replace tiles, copy frame and change point, because tileviews are immutables
-        tileViewsToMove = [[[moves.rac_sequence
-            zipWith:tileViewsToMove.rac_sequence]
-            map:^id(RACTuple* tuple) {
-                RTTVector* vector = tuple.first;
-                RTTTileView* tileView = tuple.second;
+//        // get merged tiles
+//        NSArray* tileViewsToMerge = [[[merges.rac_sequence
+//            map:^id(RTTPoint* point) {
+//                return tile(point, reducedMatrix.valueAt(point));
+//            }]
+//            map:mapTileToTileView]
+//            array];
 
-                RTTTileView* replaceTileView = mapTileToTileView(tile(vector.to, tileView.value));
-                replaceTileView.frame = tileView.frame;
-                return replaceTileView;
-            }]
-            array];
-
-        for (RTTTileView* tileView in tileViewsToMove) {
-            [gameView insertSubview:tileView atIndex:0];
-        }
-
-        // collect tiles to remove after merge
-        NSArray* tileViewsToDiscard = [[[merges.rac_sequence
-            map:mapTileViewsForPoint]
-            flatten]
-            array];
-
-        // get merged tiles
-        NSArray* tileViewsToMerge = [[[merges.rac_sequence
-            map:^id(RTTPoint* point) {
-                return tile(point, reducedMatrix.valueAt(point));
-            }]
-            map:mapTileToTileView]
-            array];
-
-        // get to creat tileviews
-        NSArray* tileViewsToCreate = [[creates.rac_sequence
-            map:mapTileToTileView]
-            array];
+//        // get to creat tileviews
+//        NSArray* tileViewsToCreate = [[creates.rac_sequence
+//            map:mapTileToTileView]
+//            array];
 
         // set score
         self.score += [[[merges.rac_sequence
@@ -219,11 +408,8 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
                                discard:tileViewsToDiscard
                                 inView:gameView];
     }];
-
-    RACSignal* matrixChangedSignal = RACObserve(self, matrix);
-
-    [[[[[matrixChangedSignal
-        ignore:nil]
+*/
+    [[[[matrixSignal
         map:^id(RTTMatrix* matrix) {
             return @(matrix.isOver());
         }]
@@ -235,17 +421,13 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
             }];
         }];
 
-    // apply the changes to the matrix
-    RACSignal* reducedMatrixSignal = [tilesAndVectorsSignal
-        map:^id(NSArray* vectors) {
-            return self.matrix.applyReduceCommands(vectors);
-        }];
+    // use signals
 
     // assign the new matrix to itself
-    RAC(self, matrix) = reducedMatrixSignal;
+    RAC(self, matrix) = updatedMatrixSignal;
 
     // log
-    [matrixChangedSignal
+    [matrixSignal
         subscribeNext:^(RTTMatrix* x) {
             NSLog(@"matrix: %@", x);
         }];
@@ -259,22 +441,22 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
                            merge:(NSArray*)tileViewsToMerge
                          discard:(NSArray*)tileViewsToDiscard
                           inView:(UIView*)container {
-    // create animations
-    for (RTTTileView* tileView in tileViewsToCreate) {
-        tileView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
-        tileView.alpha = 0.0f;
-        [container addSubview:tileView];
-    }
-    [UIView animateWithDuration:kScaleAnimDuration
-                          delay:kSlideAnimDuration
-                        options:UIViewAnimationOptionCurveEaseIn
-                     animations:^{
-                         for (RTTTileView* tileView in tileViewsToCreate) {
-                             tileView.alpha = 1.0f;
-                             tileView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
-                         }
-                     }
-                     completion:nil];
+//    // create animations
+//    for (RTTTileView* tileView in tileViewsToCreate) {
+//        tileView.transform = CGAffineTransformMakeScale(0.1f, 0.1f);
+//        tileView.alpha = 0.0f;
+//        [container addSubview:tileView];
+//    }
+//    [UIView animateWithDuration:kScaleAnimDuration
+//                          delay:kSlideAnimDuration
+//                        options:UIViewAnimationOptionCurveEaseIn
+//                     animations:^{
+//                         for (RTTTileView* tileView in tileViewsToCreate) {
+//                             tileView.alpha = 1.0f;
+//                             tileView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+//                         }
+//                     }
+//                     completion:nil];
 
     // move animation
     [UIView animateWithDuration:kSlideAnimDuration
@@ -316,3 +498,32 @@ static CGRect (^mapPointToFrame)(RTTPoint*) = ^CGRect (RTTPoint* point) {
 }
 
 @end
+
+
+
+//    RACSignal* tileViewsToMoveSignal = [[[[[[vectorsSignal
+//        map:^id(RTTVector* v) {
+//            return v.from;
+//        }]
+//        map:firstTileViewsForPoint]
+//        doNext:^(RTTTileView* tv) {
+//            // remove old tileviews
+//            [tv removeFromSuperview];
+//        }]
+//        zipWith:vectorsSignal]
+//        map:^id(RACTuple* tuple) {
+//            // create replace tiles, copy frame and change point, because tileviews are immutables
+//            RTTTileView* tileView = tuple.first;
+//            RTTVector* vector = tuple.second;
+//
+//            RTTTileView* replaceTileView = mapTileToTileView(tile(vector.to, tileView.value));
+//            replaceTileView.frame = tileView.frame;
+//            return replaceTileView;
+//        }]
+//        doNext:^(RTTTileView* tv) {
+//            [gameView insertSubview:tv atIndex:0];
+//        }];
+//
+
+
+
