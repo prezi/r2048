@@ -46,7 +46,7 @@ RTTTile* tile(RTTPoint* point, int value) {
 }
 
 - (NSUInteger)hash {
-    return self.point.hash + kMatrixSize * kMatrixSize * kMatrixSize * self.value;
+    return self.point.hash + kMatrixSize * kMatrixSize * self.value;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
