@@ -36,6 +36,8 @@ RTTPoint* point(short x, short y) {
     };
 }
 
+#pragma mark - Copy, compare, equal
+
 - (NSComparisonResult)compare:(RTTPoint*)otherPoint {
     if (self.x == otherPoint.x) {
         return COMPARE(self.y, otherPoint.y);
@@ -56,14 +58,11 @@ RTTPoint* point(short x, short y) {
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    RTTPoint* result = [[RTTPoint allocWithZone:zone] init];
-    result->_x = self.x;
-    result->_y = self.y;
-    return result;
+    return self;
 }
 
 - (id)mutableCopyWithZone:(NSZone *)zone {
-    return [self copyWithZone:zone];
+    return self;
 }
 
 - (NSString *)description {
