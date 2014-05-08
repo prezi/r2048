@@ -12,7 +12,7 @@
 
 SPEC_BEGIN(VectorSpec)
 
-describe(@"Matrix", ^{
+describe(@"Vector", ^{
     
     __block RTTPoint* p00 = point(0, 0);
     __block RTTPoint* p10 = point(1, 0);
