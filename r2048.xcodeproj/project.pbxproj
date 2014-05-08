@@ -215,8 +215,8 @@
 		ADEAFC0B1FB9BE6E8CC9ECC3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				ADEAF169D78364069F88A7D7 /* UT_Matrix.m */,
 				ADEAF47D02A6161614DF1C00 /* UT_Vector.m */,
+				ADEAF169D78364069F88A7D7 /* UT_Matrix.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -224,12 +224,12 @@
 		ADEAFE5708E6C286D6FE86C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				ADEAF5D908FD0E50CBB374C9 /* RTTMainViewController.m */,
 				ADEAFE33368A2955FFC338A8 /* RTTMainViewController.h */,
-				ADEAF9D15270E03349469500 /* RTTMatrixViewController.m */,
+				ADEAF5D908FD0E50CBB374C9 /* RTTMainViewController.m */,
 				ADEAFF53CFA68F77574D4DC5 /* RTTMatrixViewController.h */,
-				ADEAFC9FA65D256537CB3F8C /* RTTTileView.m */,
+				ADEAF9D15270E03349469500 /* RTTMatrixViewController.m */,
 				ADEAF720E0E8A70C7E7429B9 /* RTTTileView.h */,
+				ADEAFC9FA65D256537CB3F8C /* RTTTileView.m */,
 				ADEAF0CA0A148E349E29D1AA /* RTTScoreView.m */,
 				ADEAF659FBB17B3AEE7A8355 /* RTTScoreView.h */,
 			);
